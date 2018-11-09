@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../config/configManager';
+import config from '../config';
 
 const dgfipDataUrl = `${config.FD_URL}${config.DGFIP_DATA_FD_PATH}`;
 

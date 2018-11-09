@@ -4,7 +4,7 @@
  */
 import axios from 'axios';
 import querystring from 'querystring';
-import config from '../config/configManager';
+import config from '../config';
 
 /**
  * Init FranceConnect authentication login process.

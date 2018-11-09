@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import nock from 'nock';
 import { matches } from 'lodash';
-import config from '../../config/configManager';
+import config from '../../config';
 
 // POST https://fcp.dev.dev-franceconnect.fr/api/v1/token
 const base64EncodedJwtPayload = Buffer.from('{'
