@@ -1,0 +1,20 @@
+<div class="container is-fluid">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-start">
+            <div class="navbar-brand">
+                <h2 class="title is-2"><a href="/">Démonstrateur Fournisseur de Service</a></h2>
+            </div>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <% if (isUserAuthenticated) {%>
+                <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
+                    <a href="#" class="has-text-link" >
+                        <%= user.family_name %> <%= user.given_name %>
+                    </a>
+                </div>
+                <% }%>
+            </div>
+        </div>
+    </nav>
+</div>
