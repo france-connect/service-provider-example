@@ -6,7 +6,7 @@ import express from 'express';
 import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
-import config from './config/configManager';
+import config from './config';
 import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
 import oauthCallback from './controllers/oauthCallback';
 import getDgfipData from './controllers/getDgfipData';
