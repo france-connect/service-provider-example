@@ -1,9 +1,9 @@
 const config = {
-  FC_URL: process.env.FC_URL || 'https://fcp.dev.dev-franceconnect.fr',
-  FD_URL: process.env.FD_URL || 'https://fdp.dev.dev-franceconnect.fr',
+  FC_URL: process.env.FC_URL || 'https://fcp.integ01.dev-franceconnect.fr',
+  FD_URL: process.env.FD_URL || 'https://data-provider-example.herokuapp.com',
   FS_URL: process.env.FS_URL || 'http://localhost:3000',
-  CLIENT_ID: process.env.CLIENT_ID || 'a0cd64372db6ecf39c317c0c74ce90f02d8ad7d510ce054883b759d666a996bc',
-  CLIENT_SECRET: process.env.CLIENT_SECRET || 'a970fc88b3111fcfdce515c2ee03488d8a349e5379a3ba2aa48c225dcea243a5',
+  CLIENT_ID: process.env.CLIENT_ID || 'c48ff5ae96e870f507507555f7bc4dd361d2aac31df219fe6e92bbcca65f73f5',
+  CLIENT_SECRET: process.env.CLIENT_SECRET || '8f373c6e6a48ce0f5931f414b6739e4e0aa82eda20a083dc5c0522b6c691b17b',
   FRANCE_CONNECT_KIT_PATH: '/js/franceconnect.js',
   AUTHORIZATION_FC_PATH: '/api/v1/authorize',
   TOKEN_FC_PATH: '/api/v1/token',
