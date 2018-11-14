@@ -24,7 +24,7 @@ export const validTokenConf = {
   },
   requestBodyQuery: {
     grant_type: 'authorization_code',
-    redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`, // encodeURIComponent(`${config.FS_URL}${config.CALLBACK_FS_PATH}`),
+    redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`, // encodeURIComponent(`${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`),
     client_id: config.CLIENT_ID,
     client_secret: config.CLIENT_SECRET,
     code: '5b55b5616c607ee6b84d0cec2a8b82c58f31a03d17264d4e294ae14413a2f19b',
@@ -43,7 +43,7 @@ export const invalidTokenConf = {
   },
   requestBodyQuery: {
     grant_type: 'authorization_code',
-    redirect_uri: `${config.FS_URL}${config.CALLBACK_FS_PATH}`, // encodeURIComponent(`${config.FS_URL}${config.CALLBACK_FS_PATH}`),
+    redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`, // encodeURIComponent(`${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`),
     client_id: config.CLIENT_ID,
     client_secret: config.CLIENT_SECRET,
     code: 'invalid-code',

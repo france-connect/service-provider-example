@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<% include ../includes/head.ejs %>
+<body>
+<% include ../includes/header.ejs %>
+<section class="section is-medium">
+    <div class="container">
+        <h1 class="title">Voici les données que nous avons récupéré pour vous via FranceConnect</h1>
+        <pre>
+            <code class="json">
+<%- data %>
+            </code>
+        </pre>
+    </div>
+</section>
+<% include ../includes/footer.ejs %>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

@@ -7,18 +7,18 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import config from './config';
-import { getAuthorizationUrl, getLogoutUrl } from './helpers/utils';
-import oauthCallback from './controllers/oauthCallback';
-import getDgfipData from './controllers/getDgfipData';
+import {
+  getAuthorizationUrlForAuthentication,
+  getAuthorizationUrlForData,
+  getLogoutUrl,
+} from './helpers/utils';
+import { oauthLoginCallback, oauthLogoutCallback } from './controllers/oauthCallback';
+import getData from './controllers/getData';
 
 const app = express();
 
-/**
- * Session config
- * About the warning on connect.session()
- * @see {@link https://github.com/expressjs/session/issues/556}
- * @see {@link https://github.com/expressjs/session/blob/master/README.md#compatible-session-stores}
- */
+// Note this enable to store user session in memory
+// As a consequence, restarting the node process will wipe all sessions data
 app.use(session({
   store: sessionstore.createSessionStore(),
   secret: 'demo secret', // put your own secret
@@ -31,52 +31,34 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
 }
 
-app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-// Routes (@see @link{ see https://expressjs.com/en/guide/routing.html }
-app.get('/', (req, res) => {
-  res.render('pages/index', {
-    isUserAuthenticated: false,
-    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
-  });
+app.set('view engine', 'ejs');
+
+// define variable globally for the footer
+app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`;
+
+// pass the user data from session to template global variables
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
 });
 
-app.get('/login', (req, res) => {
-  res.redirect(getAuthorizationUrl());
-});
+app.get('/', (req, res) => res.render('pages/home'));
 
-app.get('/callback', oauthCallback);
+app.get('/login', (req, res) => res.render('pages/login'));
 
-app.get('/profile', (req, res) => {
-  if (!req.session.accessToken) {
-    return res.sendStatus(401);
-  }
+app.get('/login-with-france-connect', (req, res) => res.redirect(getAuthorizationUrlForAuthentication()));
 
-  return res.render('pages/profile', {
-    // get user info from session
-    user: req.session.userInfo,
-    isUserAuthenticated: true,
-    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
-  });
-});
+app.get('/login-callback', oauthLoginCallback);
 
-app.get('/callFd', getDgfipData);
+app.get('/logout', (req, res) => res.redirect(getLogoutUrl(req.session.idToken)));
 
-app.get('/logout', (req, res) => {
-  res.redirect(getLogoutUrl(req));
-});
+app.get('/logout-callback', oauthLogoutCallback);
 
-app.get('/logged-out', (req, res) => {
-  // Resetting the id token hint.
-  req.session.idToken = null;
-  // Resetting the userInfo.
-  req.session.userInfo = null;
-  res.render('pages/logged-out', {
-    isUserAuthenticated: false,
-    franceConnectKitUrl: `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`,
-  });
-});
+app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData()));
+
+app.get('/data-callback', getData);
 
 // Setting app port
 const port = process.env.PORT || '3000';
