@@ -26,7 +26,7 @@ describe('GET /callback', () => {
 
   it('should return 400 when no code is provided', (done) => {
     chai.request(app)
-      .get('/callback')
+      .get('/login-callback')
       .redirects(0)
       .end((err, res) => {
         expect(res).to.have.status(400);
@@ -36,7 +36,7 @@ describe('GET /callback', () => {
 
   it('should return 500 when using an invalid code', (done) => {
     chai.request(app)
-      .get(`/callback?code=${invalidTokenConf.requestBodyQuery.code}&state=customState11`)
+      .get(`/login-callback?code=${invalidTokenConf.requestBodyQuery.code}&state=customState11`)
       .redirects(0)
       .end((err, res) => {
         expect(res).to.have.status(500);
@@ -46,7 +46,7 @@ describe('GET /callback', () => {
 
   it('should return 302 when a valid code is provided', (done) => {
     chai.request(app)
-      .get(`/callback?code=${validTokenConf.requestBodyQuery.code}&state=customState11`)
+      .get(`/login-callback?code=${validTokenConf.requestBodyQuery.code}&state=customState11`)
       .redirects(0)
       .end((err, res) => {
         expect(res).to.have.status(302);

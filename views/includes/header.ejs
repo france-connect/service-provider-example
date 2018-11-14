@@ -1,20 +1,27 @@
-<div class="container is-fluid">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-start">
-            <div class="navbar-brand">
-                <h2 class="title is-2"><a href="/">Démonstrateur Fournisseur de Service</a></h2>
-            </div>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-start">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="/img/fc_logo_v2.png" alt="Démonstrateur Fournisseur de Service"  height="28">
+            </a>
         </div>
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <% if (isUserAuthenticated) {%>
+        <a href="/" class="navbar-item">
+            Home
+        </a>
+    </div>
+    <div class="navbar-end">
+        <div class="navbar-item">
+            <% if (locals.user) { %>
                 <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
-                    <a href="#" class="has-text-link" >
-                        <%= user.family_name %> <%= user.given_name %>
+                    <a href="#" class="has-text-link">
+                        <%= locals.user.family_name %> <%= locals.user.given_name %>
                     </a>
                 </div>
-                <% }%>
-            </div>
+            <% } else { %>
+                <div class="buttons">
+                    <a class="button is-light" href="/login">Se connecter</a>
+                </div>
+            <% } %>
         </div>
-    </nav>
-</div>
+    </div>
+</nav>

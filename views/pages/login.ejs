@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<% include ../includes/head.ejs %>
+<body>
+<% include ../includes/header.ejs %>
+<section class="section is-medium">
+    <div class="container has-text-centered">
+        <div class="column is-4 is-offset-4">
+            <h3 class="title has-text-grey">Connexion</h3>
+            <div class="box">
+                <!-- FC btn -->
+                <a href="/login-with-france-connect">
+                    <img src="img/FCboutons-10.png" alt="">
+                </a>
+                <h3>OU</h3>
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-medium" type="email" placeholder="Adresse email" disabled>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-medium" type="email" placeholder="Mot de passe" disabled>
+                    </div>
+                </div>
+                <button class="button is-block is-info is-medium is-fullwidth" disabled>Login</button>
+            </div>
+        </div>
+    </div>
+</section>
+<% include ../includes/footer.ejs %>
+</body>
+</html>
