@@ -3,7 +3,7 @@
 An implementation example of the FranceConnect button on a service provider's website. There are two uses for the FranceConnect button in this example: 1) identify the user, 2) get their consent on personnal data exchange.
 
 - [General documentation](https://partenaires.franceconnect.gouv.fr/fournisseur-service)
-- the code on this repo is automatically deployed to our [demo Site](https://service-provider-example.herokuapp.com/)
+- the code on this repo is automatically deployed to our [demo site](https://service-provider-example.herokuapp.com/)
 
 ## Prerequisites
 
