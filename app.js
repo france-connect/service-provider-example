@@ -12,8 +12,8 @@ import {
   getAuthorizationUrlForData,
   getLogoutUrl,
 } from './helpers/utils';
-import { oauthLoginCallback, oauthLogoutCallback } from './controllers/oauthCallback';
-import getData from './controllers/getData';
+import { oauthLoginCallback, oauthLogoutCallback } from './controllers/oauthAuthenticationCallback';
+import oauthDataCallback from './controllers/oauthDataCallback';
 
 const app = express();
 
@@ -58,7 +58,7 @@ app.get('/logout-callback', oauthLogoutCallback);
 
 app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData()));
 
-app.get('/data-callback', getData);
+app.get('/data-callback', oauthDataCallback);
 
 // Setting app port
 const port = process.env.PORT || '3000';

@@ -8,7 +8,7 @@ import config from '../config';
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-donnees }
  * @see @link{ https://github.com/france-connect/data-providers-examples }
  */
-const getData = async (req, res, next) => {
+const oauthDataCallback = async (req, res, next) => {
   // check if the mandatory Authorization code is there
   if (!req.query.code) {
     return res.sendStatus(400);
@@ -53,4 +53,4 @@ const getData = async (req, res, next) => {
   }
 };
 
-export default getData;
+export default oauthDataCallback;
