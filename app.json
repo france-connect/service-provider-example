@@ -1,0 +1,41 @@
+{
+  "name": "service-provider-example",
+  "scripts": {
+  },
+  "env": {
+    "CLIENT_ID": {
+      "required": true
+    },
+    "CLIENT_SECRET": {
+      "required": true
+    },
+    "DATA_CLIENT_ID": {
+      "required": true
+    },
+    "DATA_CLIENT_SECRET": {
+      "required": true
+    },
+    "FC_URL": {
+      "required": true
+    },
+    "FD_URL": {
+      "required": true
+    },
+    "FS_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
