@@ -15,7 +15,7 @@ const config = {
   DATA_CALLBACK_FS_PATH: '/data-callback',
   LOGOUT_CALLBACK_FS_PATH: '/logout-callback',
   MANDATORY_SCOPES: 'openid',
-  FC_SCOPES: 'profile birth',
+  FC_SCOPES: 'given_name family_name preferred_username birthdate gender birthplace birthcountry',
   DGFIP_SCOPES: 'dgfip_revenu_fiscal_de_reference_n_moins_1 dgfip_adresse_fiscale_de_taxation_n_moins_1',
   DGFIP_DATA_FD_PATH: '/api/dgfip',
 };
