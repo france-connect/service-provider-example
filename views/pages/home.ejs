@@ -10,25 +10,58 @@
             <h1 class="title">
                 Bienvenue sur le démonstrateur de fournisseur de service
             </h1>
-            <h2 class="subtitle">
-                Cliquez sur "se connecter" pour vous connecter via <strong>FranceConnect</strong>
-            </h2>
-            <a href="https://github.com/france-connect/identity-provider-example/blob/master/data/database.csv">La liste des comptes de test est disponible ici</a>
         </div>
     </div>
 </section>
 
 <section class="section is-small">
     <div class="container">
-        <h1 class="title">Récupérer vos données via FranceConnect</h1>
-
-        <p>Pour récupérer vos données via <strong>FranceConnect</strong> cliquez sur le bouton ci-dessous</p>
+        <h1 class="title">Se connecter avec FranceConnect</h1>
+        <h2 class="subtitle">
+            Cliquez sur "se connecter" en haut à droite de la page pour tester la connection via <strong>FranceConnect</strong>.
+        </h2>
     </div>
 </section>
+
+<hr/>
+
 <section class="section is-small">
-    <div class="container has-text-centered">
-        <!-- FC btn -->
-        <a href="/data" class="button is-link">Récupérer mes données via FranceConnect</a>
+    <div class="container">
+        <h1 class="title">Récupérer des données via une API FranceConnectée</h1>
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification">
+                            <p class="title">1</p>
+                            <p class="subtitle">Cliquez sur le bouton ci-dessous</p>
+                            <div class="has-text-centered">
+                                <!-- FC btn -->
+                                <a href="/data" class="button is-link">Récupérer mes données via FranceConnect</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification">
+                            <p class="title">2</p>
+                            <p class="subtitle">Sélectionnez le compte "Démonstration"</p>
+                            <figure class="image">
+                                <img src="/img/identity-provider-button.jpg">
+                            </figure>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification">
+                            <p class="title">3</p>
+                            <p class="subtitle">Renseignez les identifiants de test</p>
+                            <figure class="image">
+                                <img src="/img/test-credentials.jpg">
+                            </figure>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <% include ../includes/footer.ejs %>
