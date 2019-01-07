@@ -1,4 +1,4 @@
-# Service-providers-example
+# Service-provider-example
 
 An implementation example of the FranceConnect button on a service provider's website. There are two uses for the FranceConnect button in this example: 1) identify the user, 2) get their consent on personnal data exchange.
 
