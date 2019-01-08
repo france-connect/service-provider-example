@@ -1,4 +1,4 @@
-# Service-provider-example
+# service-provider-example
 
 An implementation example of the FranceConnect button on a service provider's website. There are two uses for the FranceConnect button in this example: 1) identify the user, 2) get their consent on personnal data exchange.
 
@@ -44,8 +44,15 @@ You can use a local instance of this Data Provider instead:
 1. Install and run [this Data Provider](https://github.com/france-connect/data-provider-example) (go through the optional connected installation)
 2. Restart this Service Provider with `FD_URL=http://localhost:4000 npm start`
 
-##  Run the Tests
+##  Run the tests
 
 ```bash
 npm test
+```
+
+## Run the linter
+
+Run the linter with:
+```bash
+npm run lint
 ```
