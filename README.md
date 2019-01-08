@@ -33,7 +33,7 @@ You will be prompted to choose an identity provider. Choose 'identity-provider-e
 
 You can use the following test credentials : 3_melaine | 123
 
-More credentials are available [here](https://github.com/france-connect/identity-provider-example/blob/master/data/database.csv).
+More credentials are available [here](https://github.com/france-connect/identity-provider-example/blob/master/database.csv).
 
 ## Run the app with a local Data Provider (optional)
 
