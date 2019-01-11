@@ -13,7 +13,11 @@
         <div class="navbar-item">
             <% if (locals.user) { %>
                 <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
-                    <a href="#" class="has-text-link">
+                    <a
+                        href="#"
+                        class="has-text-link"
+                        title="<% for (var prop in locals.user) { %><%- `${prop}: ${locals.user[prop]}&#13;&#10;` %><% } %>"
+                    >
                         <%= locals.user.family_name %> <%= locals.user.given_name %>
                     </a>
                 </div>
