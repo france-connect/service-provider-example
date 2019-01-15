@@ -16,8 +16,8 @@ const config = {
   LOGOUT_CALLBACK_FS_PATH: '/logout-callback',
   MANDATORY_SCOPES: 'openid',
   FC_SCOPES: 'given_name family_name preferred_username birthdate gender birthplace birthcountry',
-  DGFIP_SCOPES: 'dgfip_revenu_fiscal_de_reference_n_moins_1 dgfip_adresse_fiscale_de_taxation_n_moins_1',
-  DGFIP_DATA_FD_PATH: '/api/dgfip',
+  DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft',
+  DGFIP_DATA_FD_PATH: '/situations/ir/assiettes/annrev/2018',
 };
 
 
