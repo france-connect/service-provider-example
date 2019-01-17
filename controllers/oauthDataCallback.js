@@ -1,5 +1,5 @@
-import axios from 'axios';
 import querystring from 'querystring';
+import { httpClient } from '../helpers/httpClient';
 import config from '../config';
 
 /**
@@ -25,7 +25,7 @@ const oauthDataCallback = async (req, res, next) => {
     };
 
     // Request access token.
-    const { data: { access_token: accessToken } } = await axios({
+    const { data: { access_token: accessToken } } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: querystring.stringify(body),
@@ -37,7 +37,7 @@ const oauthDataCallback = async (req, res, next) => {
     }
 
     // Request data from data provider
-    const { data } = await axios({
+    const { data } = await httpClient({
       method: 'GET',
       // Only valid if it's used with https://github.com/france-connect/data-provider-example/
       // If you want to use your own code change the url's value in the config/config.json file.

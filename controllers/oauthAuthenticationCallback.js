@@ -2,8 +2,8 @@
  * Helper to get an access token from France Connect.
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
-import axios from 'axios';
 import querystring from 'querystring';
+import { httpClient } from '../helpers/httpClient';
 import config from '../config';
 
 /**
@@ -27,7 +27,7 @@ export const oauthLoginCallback = async (req, res, next) => {
     };
 
     // Request access token.
-    const { data: { access_token: accessToken, id_token: idToken } } = await axios({
+    const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: querystring.stringify(body),
@@ -42,7 +42,7 @@ export const oauthLoginCallback = async (req, res, next) => {
     req.session.idToken = idToken;
 
     // Request user data
-    const { data: user } = await axios({
+    const { data: user } = await httpClient({
       method: 'GET',
       headers: { Authorization: `Bearer ${accessToken}` },
       url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
