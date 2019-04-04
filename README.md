@@ -56,3 +56,30 @@ Run the linter with:
 ```bash
 npm run lint
 ```
+
+## Use different callback URLs
+
+You may want to run this code in your own development environment. You will surely need to change the callback URLs. You will be able to do so when you get your own client_id/client_secret. But if you use the provided pair used in this repository, we have configured these URLs for you to use:
+
+- http://localhost:4242/callback
+- http://localhost:8080/callback
+- http://localhost:1337/callback
+- http://localhost:3000/callback
+- http://localhost:1337/login-callback
+- http://localhost:4242/login-callback
+- http://localhost:8080/login-callback
+- http://localhost:3000/login-callback
+- http://localhost:1337/data-callback
+- http://localhost:4242/data-callback
+- http://localhost:8080/data-callback
+- http://localhost:3000/data-callback
+- http://localhost:4242/logout
+- http://localhost:8080/logout
+- http://localhost:1337/logout
+- http://localhost:3000/logout
+- http://localhost:4242/logout-callback
+- http://localhost:8080/logout-callback
+- http://localhost:1337/logout-callback
+- http://localhost:3000/logout-callback
+
+If you miss one URL, feel free to tell us so by creating a new issue on this repo.
