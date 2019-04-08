@@ -5,6 +5,7 @@
 import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
+import { getAcrFromIdToken } from '../helpers/utils';
 
 /**
  * Init FranceConnect authentication login process.
@@ -50,8 +51,16 @@ export const oauthLoginCallback = async (req, res, next) => {
 
     // Store the user in session so it is available for future requests
     req.session.user = user;
+    res.locals.user = user;
 
-    return res.redirect('/');
+    const data = {
+      user,
+      acr: getAcrFromIdToken(idToken),
+    };
+    return res.render('pages/data', {
+      data: JSON.stringify(data, null, 2),
+      dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+    });
   } catch (error) {
     return next(error);
   }

@@ -8,10 +8,31 @@
         <div class="column is-4 is-offset-4">
             <h3 class="title has-text-grey">Connexion</h3>
             <div class="box">
-                <!-- FC btn -->
-                <a href="/login-with-france-connect">
-                    <img src="img/FCboutons-10.png" alt="">
-                </a>
+                <form action="/login-with-france-connect" method="post">
+                    <div class="field">
+                        <label class="label">
+                            Niveau eIDAS
+                            <span
+                                    class="has-text-info tooltip is-tooltip-multiline"
+                                    data-tooltip="Vous pouvez dès à présent tester les identités de niveau faible (eidas1), substantiel (eidas2) et fort (eidas3) sur l'environnement de qualification. En production, vous n'aurez cependant accès pour l'instant qu'à des identités de niveau faible (eidas1)."
+                            >
+                                (info)
+                            </span>
+                        </label>
+                        <div class="select">
+                            <select name="eidasLevel">
+                                <option value="eidas1">Défaut : Faible (eidas1)</option>
+                                <option value="eidas2">Substantiel (eidas2)</option>
+                                <option value="eidas3">Fort (eidas3)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- FC btn -->
+                    <div class="field">
+                        <input type="image" src="img/FCboutons-10.png" alt="Soumettre"/>
+                    </div>
+                </form>
+
                 <h3>OU</h3>
                 <div class="field">
                     <div class="control">

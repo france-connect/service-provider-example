@@ -5,9 +5,13 @@
  */
 import config from '../config';
 
-export const getAuthorizationUrlForAuthentication = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
+export const getAuthorizationUrlForAuthentication = (eidasLevel) => {
+  const eidasQueryString = eidasLevel ? `&acr_values=${eidasLevel}` : '';
+  return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-  + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.FC_SCOPES}&state=home&nonce=customNonce11`;
+  + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.FC_SCOPES}&state=home&nonce=customNonce11`
+  + `${eidasQueryString}`;
+};
 
 export const getAuthorizationUrlForData = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.DATA_CLIENT_ID}&redirect_uri=${config.FS_URL}`
@@ -20,3 +24,7 @@ export const getAuthorizationUrlForData = () => `${config.FC_URL}${config.AUTHOR
 export const getLogoutUrl = idToken => `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`
   + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
   + `${config.LOGOUT_CALLBACK_FS_PATH}`;
+
+export const getAcrFromIdToken = idToken => (
+  JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')).acr
+);

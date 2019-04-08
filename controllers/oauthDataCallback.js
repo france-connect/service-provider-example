@@ -47,6 +47,7 @@ const oauthDataCallback = async (req, res, next) => {
 
     return res.render('pages/data', {
       data: JSON.stringify(data, null, 2),
+      dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
     });
   } catch (error) {
     return next(error);

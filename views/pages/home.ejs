@@ -4,10 +4,10 @@
 <body>
 <% include ../includes/header.ejs %>
 
-<section class="hero is-info is-medium">
+<section class="hero is-info is-small">
     <div class="hero-body">
         <div class="container">
-            <h1 class="title">
+            <h1 class="title is-1">
                 Bienvenue sur le démonstrateur de fournisseur de service
             </h1>
         </div>
@@ -16,19 +16,23 @@
 
 <section class="section is-small">
     <div class="container">
-        <h1 class="title">Se connecter avec FranceConnect</h1>
-        <h2 class="subtitle">
-            Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via
-            <strong>FranceConnect</strong>.
-        </h2>
+        <h2 class="title is-2">Vous connecter avec FranceConnect</h2>
+        <br />
+        <h3 class="subtitle is-3">
+            Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via FranceConnect.
+        </h3>
     </div>
 </section>
 
-<hr/>
+<section class="has-background-light section is-small">
+    <div class="container has-text-centered ">
+        <h1 class="title is-1">Ou</h1>
+    </div>
+</section>
 
 <section class="section is-small">
     <div class="container">
-        <h1 class="title">Récupérer ses données via une API FranceConnectée</h1>
+        <h2 class="title is-2">Récupérez vos données via une API FranceConnectée</h2>
         <div class="tile is-ancestor">
             <div class="tile is-vertical">
                 <div class="tile">
@@ -87,5 +91,9 @@
     </div>
 </section>
 <% include ../includes/footer.ejs %>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script src="/js/home.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
