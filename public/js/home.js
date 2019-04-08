@@ -1,4 +1,4 @@
-/* eslint no-func-assign: "error" */
+/* eslint no-unused-vars */
 /* eslint-env browser */
 function toggleData() {
   if (document.getElementById('resdetails').style.display === 'none') {
