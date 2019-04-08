@@ -34,8 +34,8 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 app.set('view engine', 'ejs');
@@ -46,8 +46,8 @@ app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PA
 // pass the user data from session to template global variables
 app.use((req, res, next) => {
   res.locals.user = req.session.user;
-  if(req.session.idToken) {
-    res.locals.acr = JSON.parse(Buffer(req.session.idToken.split('.')[1], 'base64').toString('utf8')).acr;
+  if (req.session.idToken) {
+    res.locals.acr = JSON.parse(Buffer.from(req.session.idToken.split('.')[1], 'base64').toString('utf8')).acr;
   }
   next();
 });
