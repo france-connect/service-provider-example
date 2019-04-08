@@ -38,8 +38,19 @@ export const oauthLoginCallback = async (req, res, next) => {
       return res.sendStatus(401);
     }
 
+
+    console.log('------------------------idtoken', idToken)
+
+
+    let decodedIdToken = JSON.parse(Buffer(idToken.split('.')[1], 'base64').toString('utf8'))
+    console.log('-----------------decoded2', decodedIdToken)
+    let acr = decodedIdToken.acr;
+    console.log('----------------acr', acr)
+
+
     // Store the idToken in session so it is available for logout
     req.session.idToken = idToken;
+
 
     // Request user data
     const { data: user } = await httpClient({
@@ -47,7 +58,7 @@ export const oauthLoginCallback = async (req, res, next) => {
       headers: { Authorization: `Bearer ${accessToken}` },
       url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
     });
-
+    console.log('user', user);
     // Store the user in session so it is available for future requests
     req.session.user = user;
 

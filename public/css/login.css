@@ -1,0 +1,25 @@
+.accroche {
+	color: #209cee;
+	font-size: 1.4rem;
+	font-weight: bold;
+	margin-bottom: 2rem;
+}
+
+.eIDASLabel {
+	padding: 1rem;
+	color: #209cee;
+	font-size: 1.2rem;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.selectEIDAS {
+	padding: 1rem;
+	background-color: white;
+	margin-bottom: 2rem;
+	width: 80%;
+}
+
+optgroup option {
+	font-size: 1rem;
+}

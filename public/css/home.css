@@ -1,0 +1,34 @@
+h1.or {
+	font-size: 2.5rem;
+	font-weight: bold;
+	text-align: center;
+	font-style: italic;
+	color: #209cee;
+	margin-top: 1rem;
+}
+
+.connect {
+	display: flex;
+	flex-direction: column;
+}
+
+.accessDataContainer {
+	text-align: center;
+	padding: 2rem;
+}
+
+.accessData {
+	background-color: #209cee;
+	border: 6px solid #00569E;
+	color: white;
+	font-size: 1.1rem;
+	font-weight: bold;
+	padding: 2rem;
+	margin-top: 3rem;
+}
+
+.infosUtilisateurs {
+	font-size: 1rem;
+	font-weight: bold;
+	text-transform: uppercase;
+}

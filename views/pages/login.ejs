@@ -1,17 +1,31 @@
 <!doctype html>
 <html lang="en">
-<% include ../includes/head.ejs %>
+<head>
+    <% include ../includes/head.ejs %>
+    <link href="/css/login.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 <% include ../includes/header.ejs %>
 <section class="section is-medium">
     <div class="container has-text-centered">
+        <p class="accroche">Vous pouvez dès à présent tester les identités de niveau faible (eidas1), substantiel (eidas2) et fort (eidas3) sur l'environnement de qualification. En production, vous n'aurez cependant accès pour l'instant qu'à des identités de niveau faible (eidas1).</p>
         <div class="column is-4 is-offset-4">
             <h3 class="title has-text-grey">Connexion</h3>
             <div class="box">
-                <!-- FC btn -->
-                <a href="/login-with-france-connect">
-                    <img src="img/FCboutons-10.png" alt="">
-                </a>
+                <form id="eidasAndConnect" action="/login-with-france-connect" method="post">
+                    <p class="eIDASLabel">Niveau eIDAS demandé à FranceConnect</p>
+                    <select name="eidas" class="selectEIDAS">
+                        <optgroup>
+                            <option value="">Ne pas demander de niveau</option>
+                            <option value="eidas1">Faible (eidas1)</option>
+                            <option value="eidas2">Substantiel (eidas2)</option>
+                            <option value="eidas3">Fort (eidas3)</option>
+                        </optgroup>
+                    </select>
+                    <!-- FC btn -->
+                    <input type="image" src="img/FCboutons-10.png" alt="Soumettre" />
+                </form>
+                
                 <h3>OU</h3>
                 <div class="field">
                     <div class="control">

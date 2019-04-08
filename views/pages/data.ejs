@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
-<% include ../includes/head.ejs %>
+<head>
+    <% include ../includes/head.ejs %>
+    <link href="/css/data.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 <% include ../includes/header.ejs %>
 <section class="section is-medium">
@@ -8,7 +11,7 @@
         <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
         <pre>
             <code class="json">
-<%- data %>
+                <%- data %>
             </code>
         </pre>
         <p class="has-text-centered">

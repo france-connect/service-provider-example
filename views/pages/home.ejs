@@ -1,10 +1,14 @@
 <!doctype html>
 <html lang="en">
-<% include ../includes/head.ejs %>
+
+<head>
+    <% include ../includes/head.ejs %>
+    <link href="/css/home.css" rel="stylesheet" type="text/css">
+</head>
 <body>
 <% include ../includes/header.ejs %>
 
-<section class="hero is-info is-medium">
+<section class="hero is-info is-small">
     <div class="hero-body">
         <div class="container">
             <h1 class="title">
@@ -14,21 +18,46 @@
     </div>
 </section>
 
-<section class="section is-small">
-    <div class="container">
-        <h1 class="title">Se connecter avec FranceConnect</h1>
-        <h2 class="subtitle">
-            Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via
-            <strong>FranceConnect</strong>.
-        </h2>
+<% if (!locals.user) { %>
+    <section class="section is-small">
+        <div class="container">
+                <h1 class="title is-1 connect">Se connecter avec FranceConnect</h1>
+                <br />
+                <h1 class="title is-3">
+                    Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via
+                    <strong>FranceConnect</strong>.
+                </h1>
+        </div>
+    </section>
+<% } else { %>
+    <div class="accessDataContainer">
+        <button id="accessData" class="accessData" onclick=toggleData()>
+            Afficher les informations renvoyées par FranceConnect
+        </button>
     </div>
-</section>
+    <section id="resdetails" class="section is-medium visible">
+        <div class="container">
+            <pre>
+                <label class="infosUtilisateurs">Informations utilisateurs</label>
+                <code class="json">
+                    <%- JSON.stringify(locals.user, null, 2) %>
+                </code>
+                <label class="infosUtilisateurs">Contexte d'authentification</label>
+                <code class="json">
+                    <%- JSON.stringify({acr:locals.acr}, null, 2) %>
+                </code>
+            </pre>
+        </div>
+    </section>
+<% } %>
 
-<hr/>
+<div class="container">
+    <h1 class="or">Ou</h1>
+</div>
 
 <section class="section is-small">
     <div class="container">
-        <h1 class="title">Récupérer ses données via une API FranceConnectée</h1>
+        <h1 class="title is-3">Récupérez vos données via une API FranceConnectée (sans connexion nécessaire)</h1>
         <div class="tile is-ancestor">
             <div class="tile is-vertical">
                 <div class="tile">
@@ -87,5 +116,9 @@
     </div>
 </section>
 <% include ../includes/footer.ejs %>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script src="/js/home.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
