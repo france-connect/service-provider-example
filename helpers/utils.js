@@ -5,8 +5,6 @@
  */
 import config from '../config';
 
-
-
 export const getAuthorizationUrlForAuthentication = (eidasLevel) => {
   const eidas = eidasLevel ? `&acr_values=${eidasLevel}` : '';
   return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
