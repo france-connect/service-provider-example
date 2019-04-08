@@ -25,6 +25,11 @@ h1.or {
 	font-weight: bold;
 	padding: 2rem;
 	margin-top: 3rem;
+	cursor: pointer;
+}
+
+#resdetails {
+	display: none;
 }
 
 .infosUtilisateurs {
