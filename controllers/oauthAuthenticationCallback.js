@@ -38,9 +38,6 @@ export const oauthLoginCallback = async (req, res, next) => {
       return res.sendStatus(401);
     }
 
-    const decodedIdToken = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8'));
-    const acr = decodedIdToken.acr;
-
     // Store the idToken in session so it is available for logout
     req.session.idToken = idToken;
 
