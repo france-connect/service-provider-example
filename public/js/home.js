@@ -1,6 +1,6 @@
-/* eslint no-unused-vars */
 /* eslint-env browser */
-function toggleData() {
+
+function toggleData() { // eslint-disable-line no-unused-vars
   if (document.getElementById('resdetails').style.display === 'none') {
     document.getElementById('resdetails').style.display = 'block';
     document.getElementById('accessData').innerText = 'Afficher les informations renvoyées par FranceConnect';
