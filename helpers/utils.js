@@ -8,12 +8,12 @@ import config from '../config';
 
 
 export const getAuthorizationUrlForAuthentication = (eidasLevel) => {
-	const eidas = eidasLevel ? `&acr_values=${eidasLevel}` : ''
-	return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
+  const eidas = eidasLevel ? `&acr_values=${eidasLevel}` : '';
+  return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
   + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.FC_SCOPES}&state=home&nonce=customNonce11`
   + `${eidas}`;
-}
+};
 
 export const getAuthorizationUrlForData = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.DATA_CLIENT_ID}&redirect_uri=${config.FS_URL}`
