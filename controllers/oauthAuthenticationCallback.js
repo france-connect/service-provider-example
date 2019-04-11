@@ -51,10 +51,22 @@ export const oauthLoginCallback = async (req, res, next) => {
     // Store the user in session so it is available for future requests
     req.session.user = user;
 
-    return res.redirect('/');
+    req.session.data = user;
+    req.session.context = { acr: getAcrFromIdToken(idToken) };
+
+    return res.redirect('/debugFC');
   } catch (error) {
     return next(error);
   }
+};
+
+export const debugDataFC = (req, res) => {
+  return res.render('pages/data', {
+    user: req.session.user,
+    data: JSON.stringify(req.session.data, null, 2),
+    context: JSON.stringify(req.session.context, null, 2),
+    dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+  });
 };
 
 export const oauthLogoutCallback = (req, res) => {
@@ -62,6 +74,7 @@ export const oauthLogoutCallback = (req, res) => {
   req.session.idToken = null;
   // Remove user from session
   req.session.user = null;
-
+  // Remove accessToken from session
+  req.session.accessToken = null;
   return res.redirect('/');
 };

@@ -18,35 +18,38 @@
     </div>
 </section>
 
-<% if (!locals.user) { %>
+<% if (locals.user) { %>
     <section class="section is-small">
         <div class="container">
-                <h1 class="title is-1 connect">Se connecter avec FranceConnect</h1>
-                <br />
-                <h1 class="title is-3">
-                    Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via
-                    <strong>FranceConnect</strong>.
-                </h1>
+            <p class="has-text-centered">
+                <a
+                        href="/debugFC"
+                        class="button is-info is-medium is-hovered"
+                >Afficher les données récupérées grâce à France Connect
+                </a>
+            </p>
+        </div>
+    </section>
+<% } else if (locals.accessToken) { %>
+    <section class="section is-small">
+        <div class="container">
+            <p class="has-text-centered">
+                <a
+                        href="/debug"
+                        class="button is-info is-medium is-hovered"
+                >Afficher les données récupérées grâce à France Connect
+                </a>
+            </p>
         </div>
     </section>
 <% } else { %>
-    <div class="accessDataContainer">
-        <button id="accessData" class="accessData" onclick=toggleData()>
-            Afficher les informations renvoyées par FranceConnect
-        </button>
-    </div>
-    <section id="resdetails" class="section is-medium visible">
+    <section class="section is-small">
         <div class="container">
-            <pre>
-                <label class="infosUtilisateurs">Informations utilisateurs</label>
-                <code class="json">
-                    <%- JSON.stringify(locals.user, null, 2) %>
-                </code>
-                <label class="infosUtilisateurs">Contexte d'authentification</label>
-                <code class="json">
-                    <%- JSON.stringify({acr:locals.acr}, null, 2) %>
-                </code>
-            </pre>
+            <h2 class="title is-2">Connectez-vous avec FranceConnect</h2>
+            <br />
+            <h3 class="subtitle is-3">
+                Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via FranceConnect.
+            </h3>
         </div>
     </section>
 <% } %>

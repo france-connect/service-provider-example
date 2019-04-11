@@ -8,7 +8,7 @@ import config from '../config';
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-donnees }
  * @see @link{ https://github.com/france-connect/data-providers-examples }
  */
-const oauthDataCallback = async (req, res, next) => {
+export const oauthDataCallback = async (req, res, next) => {
   // check if the mandatory Authorization code is there
   if (!req.query.code) {
     return res.sendStatus(400);
@@ -45,12 +45,18 @@ const oauthDataCallback = async (req, res, next) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    return res.render('pages/data', {
-      data: JSON.stringify(data, null, 2),
-    });
+    req.session.accessToken = accessToken;
+    req.session.data = data;
+
+    return res.redirect('/debug');
   } catch (error) {
     return next(error);
   }
 };
 
-export default oauthDataCallback;
+export const debugData = (req, res) => {
+  return res.render('pages/data', {
+    data: JSON.stringify(req.session.data, null, 2),
+    dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
+  });
+};

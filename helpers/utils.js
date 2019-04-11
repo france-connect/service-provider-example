@@ -24,3 +24,7 @@ export const getAuthorizationUrlForData = () => `${config.FC_URL}${config.AUTHOR
 export const getLogoutUrl = idToken => `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`
   + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
   + `${config.LOGOUT_CALLBACK_FS_PATH}`;
+
+export const getAcrFromIdToken = (idToken) => {
+  return JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')).acr;
+};

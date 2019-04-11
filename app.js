@@ -14,8 +14,8 @@ import {
   getAuthorizationUrlForData,
   getLogoutUrl,
 } from './helpers/utils';
-import { oauthLoginCallback, oauthLogoutCallback } from './controllers/oauthAuthenticationCallback';
-import oauthDataCallback from './controllers/oauthDataCallback';
+import { oauthLoginCallback, oauthLogoutCallback, debugDataFC } from './controllers/oauthAuthenticationCallback';
+import { oauthDataCallback, debugData }   from './controllers/oauthDataCallback';
 
 const app = express();
 
@@ -46,9 +46,7 @@ app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PA
 // pass the user data from session to template global variables
 app.use((req, res, next) => {
   res.locals.user = req.session.user;
-  if (req.session.idToken) {
-    res.locals.acr = JSON.parse(Buffer.from(req.session.idToken.split('.')[1], 'base64').toString('utf8')).acr;
-  }
+  res.locals.accessToken = req.session.accessToken;
   next();
 });
 
@@ -65,6 +63,10 @@ app.get('/logout', (req, res) => res.redirect(getLogoutUrl(req.session.idToken))
 app.get('/logout-callback', oauthLogoutCallback);
 
 app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData()));
+
+app.get('/debugFC', debugDataFC);
+
+app.get('/debug', debugData);
 
 app.get('/data-callback', oauthDataCallback);
 
