@@ -56,3 +56,37 @@ Run the linter with:
 ```bash
 npm run lint
 ```
+
+## Public key for Franceconnect integration environment
+
+This repository is shipped with public integration keys.
+It allow you to discover the application and start your tests without waiting for the validation of
+your request on https://signup.api.gouv.fr/franceconnect.
+
+This key is for limited use and has no support from our team:
+
+- CLIENT_ID: '211286433e39cce01db448d80181bdfd005554b19cd51b3fe7943f6b3b86ab6e'
+- CLIENT_SECRET: '2791a731e6a59f56b6b4dd0d08c9b1f593b5f3658b9fd731cb24248e2669af4b'
+
+The allowed callback URL with this key are listed bellow :
+
+- http://localhost:4242/callback
+- http://localhost:8080/callback
+- http://localhost:1337/callback
+- http://localhost:3000/callback
+- http://localhost:1337/login-callback
+- http://localhost:4242/login-callback
+- http://localhost:8080/login-callback
+- http://localhost:3000/login-callback
+- http://localhost:1337/data-callback
+- http://localhost:4242/data-callback
+- http://localhost:8080/data-callback
+- http://localhost:3000/data-callback
+- http://localhost:4242/logout
+- http://localhost:8080/logout
+- http://localhost:1337/logout
+- http://localhost:3000/logout
+- http://localhost:4242/logout-callback
+- http://localhost:8080/logout-callback
+- http://localhost:1337/logout-callback
+- http://localhost:3000/logout-callback
