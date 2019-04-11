@@ -6,11 +6,11 @@
 import config from '../config';
 
 export const getAuthorizationUrlForAuthentication = (eidasLevel) => {
-  const eidas = eidasLevel ? `&acr_values=${eidasLevel}` : '';
+  const eidasQueryString = eidasLevel ? `&acr_values=${eidasLevel}` : '';
   return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
   + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.FC_SCOPES}&state=home&nonce=customNonce11`
-  + `${eidas}`;
+  + `${eidasQueryString}`;
 };
 
 export const getAuthorizationUrlForData = () => `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
@@ -25,6 +25,4 @@ export const getLogoutUrl = idToken => `${config.FC_URL}${config.LOGOUT_FC_PATH}
   + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
   + `${config.LOGOUT_CALLBACK_FS_PATH}`;
 
-export const getAcrFromIdToken = (idToken) => {
-  return JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')).acr;
-};
+export const getAcrFromIdToken = idToken => JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')).acr;

@@ -37,11 +37,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.set('view engine', 'ejs');
-
-// define variable globally for the footer
-app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`;
 
 // pass the user data from session to template global variables
 app.use((req, res, next) => {
@@ -50,11 +46,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// define variable globally for the footer
+app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PATH}`;
+
 app.get('/', (req, res) => res.render('pages/home'));
 
 app.get('/login', (req, res) => res.render('pages/login'));
 
-app.post('/login-with-france-connect', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidas)));
+app.post('/login-with-france-connect', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidasLevel)));
 
 app.get('/login-callback', oauthLoginCallback);
 

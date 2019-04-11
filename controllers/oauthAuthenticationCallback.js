@@ -5,6 +5,7 @@
 import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
+import { getAcrFromIdToken } from '../helpers/utils';
 
 /**
  * Init FranceConnect authentication login process.
@@ -50,6 +51,7 @@ export const oauthLoginCallback = async (req, res, next) => {
     });
     // Store the user in session so it is available for future requests
     req.session.user = user;
+    res.locals.user = user;
 
     req.session.data = user;
     req.session.context = { acr: getAcrFromIdToken(idToken) };
