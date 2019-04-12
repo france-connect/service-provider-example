@@ -49,7 +49,7 @@ describe('GET /callback', () => {
       .get(`/login-callback?code=${validTokenConf.requestBodyQuery.code}&state=customState11`)
       .redirects(0)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(302);
         done();
       });
   });
