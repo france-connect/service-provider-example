@@ -14,15 +14,29 @@
     </div>
 </section>
 
-<section class="section is-small">
-    <div class="container">
-        <h2 class="title is-2">Vous connecter avec FranceConnect</h2>
-        <br />
-        <h3 class="subtitle is-3">
-            Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via FranceConnect.
-        </h3>
-    </div>
-</section>
+<% if (!locals.accessToken && !locals.idToken) { %>
+    <section class="section is-small">
+        <div class="container">
+            <h2 class="title is-2">Connectez-vous avec FranceConnect</h2>
+            <br />
+            <h3 class="subtitle is-3">
+                Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via FranceConnect.
+            </h3>
+        </div>
+    </section>
+<% } else { %>
+    <section class="section is-small">
+        <div class="container">
+            <p class="has-text-centered">
+                <a
+                        href="<%= locals.debugRoute %>""
+                        class="button is-info is-medium is-hovered"
+                >Afficher les données récupérées grâce à France Connect
+                </a>
+            </p>
+        </div>
+    </section>
+<% } %>
 
 <section class="has-background-light section is-small">
     <div class="container has-text-centered ">
