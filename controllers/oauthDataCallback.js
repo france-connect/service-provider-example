@@ -57,9 +57,7 @@ export const oauthDataCallback = async (req, res, next) => {
   }
 };
 
-export const debugData = (req, res) => {
-  return res.render('pages/data', {
-    data: JSON.stringify(req.session.data, null, 2),
-    dataLink: req.session.debugRoute,
-  });
-};
+export const debugData = (req, res) => res.render('pages/data', {
+  data: JSON.stringify(req.session.data, null, 2),
+  dataLink: req.session.debugRoute,
+});

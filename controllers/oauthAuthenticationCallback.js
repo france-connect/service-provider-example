@@ -59,20 +59,20 @@ export const oauthLoginCallback = async (req, res, next) => {
   }
 };
 
-export const debugDataFC = (req, res) => {
-  return res.render('pages/data', {
-    user: req.session.user,
-    data: JSON.stringify(req.session.user, null, 2),
-    context: JSON.stringify(req.session.context, null, 2),
-    dataLink: req.session.debugRoute,
-  });
-};
+export const debugDataFC = (req, res) => res.render('pages/data', {
+  user: req.session.user,
+  data: JSON.stringify(req.session.user, null, 2),
+  context: JSON.stringify(req.session.context, null, 2),
+  dataLink: req.session.debugRoute,
+});
+
 
 export const oauthLogoutCallback = (req, res) => {
-  // Remove idToken from session
+  // Remove idToken, user, context and debug route from session
   req.session.idToken = null;
-  // Remove user from session
   req.session.user = null;
+  req.session.context = null;
+  req.session.debugRoute = null;
 
   return res.redirect('/');
 };

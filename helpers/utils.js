@@ -23,7 +23,8 @@ export const getAuthorizationUrlForData = (req) => {
   if (req.session.debugRoute) { req.session.debugRoute = null; }
   return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.DATA_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-  + `${config.DATA_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.DGFIP_SCOPES}&state=home&nonce=customNonce11`; }
+  + `${config.DATA_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.DGFIP_SCOPES}&state=home&nonce=customNonce11`;
+};
 
 /**
  * Format the url 's that is used in a redirect call to France Connect logout API endpoint
@@ -33,6 +34,4 @@ export const getLogoutUrl = idToken => `${config.FC_URL}${config.LOGOUT_FC_PATH}
   + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
   + `${config.LOGOUT_CALLBACK_FS_PATH}`;
 
-export const getAcrFromIdToken = (idToken) => {
-  return JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')).acr;
-};
+export const getAcrFromIdToken = idToken => JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString('utf8')).acr;
