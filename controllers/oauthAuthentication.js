@@ -35,7 +35,7 @@ export const oauthLoginCallback = async (req, res, next) => {
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
-    if (!accessToken) {
+    if (!accessToken || !idToken) {
       return res.sendStatus(401);
     }
 
@@ -48,31 +48,30 @@ export const oauthLoginCallback = async (req, res, next) => {
 
     // Store the user in session so it is available for future requests
     // as the idToken for Logout, and the context
-    req.session.idToken = idToken;
     req.session.user = user;
     req.session.context = { acr: getAcrFromIdToken(idToken) };
-    req.session.debugRoute = 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv';
+    req.session.idToken = idToken;
 
-    return res.redirect('/debugFC');
+    return res.redirect('/user');
   } catch (error) {
     return next(error);
   }
 };
 
-export const debugDataFC = (req, res) => res.render('pages/data', {
+export const getUser = (req, res) => res.render('pages/data', {
   user: req.session.user,
   data: JSON.stringify(req.session.user, null, 2),
   context: JSON.stringify(req.session.context, null, 2),
-  dataLink: req.session.debugRoute,
+  dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
 });
 
 
 export const oauthLogoutCallback = (req, res) => {
-  // Remove idToken, user, context and debug route from session
+  // Empty session
   req.session.idToken = null;
+  req.session.data = null;
   req.session.user = null;
   req.session.context = null;
-  req.session.debugRoute = null;
 
   return res.redirect('/');
 };

@@ -49,15 +49,14 @@ export const oauthDataCallback = async (req, res, next) => {
     // and data to be able to display them on data page
     req.session.accessToken = accessToken;
     req.session.data = data;
-    req.session.debugRoute = 'https://github.com/france-connect/data-provider-example/blob/master/database.csv';
 
-    return res.redirect('/debug');
+    return res.redirect('/data-data');
   } catch (error) {
     return next(error);
   }
 };
 
-export const debugData = (req, res) => res.render('pages/data', {
+export const getData = (req, res) => res.render('pages/data', {
   data: JSON.stringify(req.session.data, null, 2),
-  dataLink: req.session.debugRoute,
+  dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
 });

@@ -14,8 +14,8 @@ import {
   getAuthorizationUrlForData,
   getLogoutUrl,
 } from './helpers/utils';
-import { oauthLoginCallback, oauthLogoutCallback, debugDataFC } from './controllers/oauthAuthenticationCallback';
-import { oauthDataCallback, debugData } from './controllers/oauthDataCallback';
+import { oauthLoginCallback, oauthLogoutCallback, getUser } from './controllers/oauthAuthentication';
+import { oauthDataCallback, getData } from './controllers/oauthData';
 
 const app = express();
 
@@ -43,9 +43,7 @@ app.set('view engine', 'ejs');
 // pass the user data from session to template global variables
 app.use((req, res, next) => {
   res.locals.user = req.session.user;
-  res.locals.accessToken = req.session.accessToken;
-  res.locals.idToken = req.session.idToken;
-  res.locals.debugRoute = req.session.debugRoute;
+  res.locals.data = req.session.data;
   next();
 });
 
@@ -56,7 +54,7 @@ app.get('/', (req, res) => res.render('pages/home'));
 
 app.get('/login', (req, res) => res.render('pages/login'));
 
-app.post('/login-with-france-connect', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidasLevel, req)));
+app.post('/login-with-france-connect', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidasLevel)));
 
 app.get('/login-callback', oauthLoginCallback);
 
@@ -68,9 +66,9 @@ app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData(req)));
 
 app.get('/data-callback', oauthDataCallback);
 
-app.get('/debugFC', debugDataFC);
+app.get('/user', getUser);
 
-app.get('/debug', debugData);
+app.get('/data-data', getData);
 
 // Setting app port
 const port = process.env.PORT || '3000';
