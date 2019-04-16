@@ -6,7 +6,6 @@
 import config from '../config';
 
 export const getAuthorizationUrlForAuthentication = (eidasLevel) => {
-  console.log('eidasLevel', eidasLevel);
   const eidasQueryString = eidasLevel ? `&acr_values=${eidasLevel}` : '';
   return `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
   + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
