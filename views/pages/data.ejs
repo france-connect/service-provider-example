@@ -6,14 +6,23 @@
 
 <section class="section is-small">
     <div class="container">
-        <h1 class="title">Voici les données que nous avons récupérées pour vous avec France Connect</h1>
+        <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
         <pre>
+            <p><strong><i>Corps des données :</i></strong></p>
             <code class="json">
-<%- data %>
+<%- locals.data %>
             </code>
         </pre>
+        <% if (locals.context) { %>
+            <pre>
+            <p><strong><i>Accréditation eIDAS :</i></strong></p>
+            <code class="json">
+<%- locals.context %>
+            </code>
+        </pre>
+        <% } %>
         <p class="has-text-centered">
-            <a href="<%= dataLink %>">
+            <a href="<%= locals.dataLink %>">
                 Voir les données disponibles
             </a>
         </p>

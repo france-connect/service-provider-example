@@ -14,22 +14,89 @@
     </div>
 </section>
 
+<% if (locals.user) { %>
 <section class="section is-small">
     <div class="container">
-        <h2 class="title is-2">Vous connecter avec FranceConnect</h2>
-        <br />
-        <h3 class="subtitle is-3">
-            Cliquez sur "se connecter" en haut à droite de la page pour tester la connexion via FranceConnect.
-        </h3>
+        <p class="has-text-centered">
+            <a
+                    href="/user"
+                    class="button is-info is-medium is-hovered"
+            >Afficher vos informations d'utilisateur
+            </a>
+        </p>
     </div>
 </section>
-
-<section class="has-background-light section is-small">
-    <div class="container has-text-centered ">
-        <h1 class="title is-1">Ou</h1>
+<% } else { %>
+<section class="section is-small">
+    <div class="container">
+        <h2 class="title is-2">Connectez-vous via France Connect</h2>
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical">
+                <div class="tile">
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification">
+                            <p class="title">1. Cliquez</p>
+                            <p class="subtitle">sur le bouton FranceConnect</p>
+                            <div class="has-text-centered content is-vcentered">
+                                <!-- FC btn -->
+                                <a href="/login">
+                                    <img src="/img/FCboutons-10.svg" alt="">
+                                </a>
+                                <p style="margin-top: 2em;">
+                                    <a href="https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service">
+                                        Documentation générale de FranceConnect
+                                    </a>
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification">
+                            <p class="title">2. Sélectionnez</p>
+                            <p class="subtitle">Sélectionnez le compte "Démonstration"</p>
+                            <div class="has-text-centered content">
+                                <figure class="image">
+                                    <img src="/img/logoPartner-v2.png">
+                                </figure>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification">
+                            <p class="title">3. Saisissez</p>
+                            <p class="subtitle">votre identifiant et mot de passe pour le compte sélectionné</p>
+                            <div class="has-text-centered content">
+                                <figure class="image">
+                                    <img src="/img/how-it-works-form.png" class="image is-128x128">
+                                </figure>
+                                <p style="margin-top: 2em;">
+                                    <a href="https://github.com/france-connect/identity-provider-example/blob/master/database.csv">
+                                        Voir les identifiants de test disponibles
+                                    </a>
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+<% } %>
 
+<% if (locals.data) { %>
+<section class="section is-small">
+    <div class="container">
+        <p class="has-text-centered">
+            <a
+                    href="/data-data"
+                    class="button is-info is-medium is-hovered"
+            >Afficher les données récupérées grâce à France Connect
+            </a>
+        </p>
+    </div>
+</section>
+<% } else { %>
 <section class="section is-small">
     <div class="container">
         <h2 class="title is-2">Récupérez vos données via une API FranceConnectée</h2>
@@ -38,8 +105,8 @@
                 <div class="tile">
                     <div class="tile is-parent">
                         <article class="tile is-child notification">
-                            <p class="title">1</p>
-                            <p class="subtitle">Cliquez sur le bouton ci-dessous</p>
+                            <p class="title">1. Cliquez</p>
+                            <p class="subtitle">sur le bouton ci-dessous</p>
                             <div class="has-text-centered content">
                                 <!-- FC btn -->
                                 <a href="/data">
@@ -55,8 +122,8 @@
                     </div>
                     <div class="tile is-parent">
                         <article class="tile is-child notification">
-                            <p class="title">2</p>
-                            <p class="subtitle">Sélectionnez le compte "Démonstration"</p>
+                            <p class="title">2. Sélectionnez</p>
+                            <p class="subtitle">le compte "Démonstration"</p>
                             <div class="has-text-centered content">
                                 <figure class="image">
                                     <img src="/img/identity-provider-button.jpg">
@@ -71,8 +138,8 @@
                     </div>
                     <div class="tile is-parent">
                         <article class="tile is-child notification">
-                            <p class="title">3</p>
-                            <p class="subtitle">Renseignez les identifiants de test</p>
+                            <p class="title">3. Renseignez</p>
+                            <p class="subtitle">les identifiants de test</p>
                             <div class="has-text-centered content">
                                 <figure class="image">
                                     <img src="/img/test-credentials.jpg">
@@ -90,6 +157,7 @@
         </div>
     </div>
 </section>
+<% } %>
 <% include ../includes/footer.ejs %>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>

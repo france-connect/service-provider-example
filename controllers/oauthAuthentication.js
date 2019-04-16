@@ -35,12 +35,9 @@ export const oauthLoginCallback = async (req, res, next) => {
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
-    if (!accessToken) {
+    if (!accessToken || !idToken) {
       return res.sendStatus(401);
     }
-
-    // Store the idToken in session so it is available for logout
-    req.session.idToken = idToken;
 
     // Request user data
     const { data: user } = await httpClient({
@@ -50,27 +47,28 @@ export const oauthLoginCallback = async (req, res, next) => {
     });
 
     // Store the user in session so it is available for future requests
+    // as the idToken for Logout, and the context
     req.session.user = user;
-    res.locals.user = user;
+    req.session.context = { acr: getAcrFromIdToken(idToken) };
+    req.session.idToken = idToken;
 
-    const data = {
-      user,
-      acr: getAcrFromIdToken(idToken),
-    };
-    return res.render('pages/data', {
-      data: JSON.stringify(data, null, 2),
-      dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
-    });
+    return res.redirect('/user');
   } catch (error) {
     return next(error);
   }
 };
 
+export const getUser = (req, res) => res.render('pages/data', {
+  user: req.session.user,
+  data: JSON.stringify(req.session.user, null, 2),
+  context: JSON.stringify(req.session.context, null, 2),
+  dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+});
+
+
 export const oauthLogoutCallback = (req, res) => {
-  // Remove idToken from session
-  req.session.idToken = null;
-  // Remove user from session
-  req.session.user = null;
+  // Empty session
+  req.session.destroy();
 
   return res.redirect('/');
 };
