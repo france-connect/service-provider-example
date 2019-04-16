@@ -68,10 +68,7 @@ export const getUser = (req, res) => res.render('pages/data', {
 
 export const oauthLogoutCallback = (req, res) => {
   // Empty session
-  req.session.idToken = null;
-  req.session.data = null;
-  req.session.user = null;
-  req.session.context = null;
+  req.session.destroy();
 
   return res.redirect('/');
 };
