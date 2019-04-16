@@ -62,7 +62,7 @@ app.get('/logout', (req, res) => res.redirect(getLogoutUrl(req.session.idToken))
 
 app.get('/logout-callback', oauthLogoutCallback);
 
-app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData(req)));
+app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData()));
 
 app.get('/data-callback', oauthDataCallback);
 
