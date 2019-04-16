@@ -14,6 +14,19 @@
     </div>
 </section>
 
+<% if (locals.user) { %>
+<section class="section is-small">
+    <div class="container">
+        <p class="has-text-centered">
+            <a
+                    href="/user"
+                    class="button is-info is-medium is-hovered"
+            >Afficher vos informations d'utilisateur
+            </a>
+        </p>
+    </div>
+</section>
+<% } else { %>
 <section class="section is-small">
     <div class="container">
         <h2 class="title is-2">Connectez-vous via France Connect</h2>
@@ -69,7 +82,21 @@
         </div>
     </div>
 </section>
+<% } %>
 
+<% if (locals.data) { %>
+<section class="section is-small">
+    <div class="container">
+        <p class="has-text-centered">
+            <a
+                    href="/data-data"
+                    class="button is-info is-medium is-hovered"
+            >Afficher les données récupérées grâce à France Connect
+            </a>
+        </p>
+    </div>
+</section>
+<% } else { %>
 <section class="section is-small">
     <div class="container">
         <h2 class="title is-2">Récupérez vos données via une API FranceConnectée</h2>
@@ -128,33 +155,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<% if (locals.user) { %>
-<section class="section is-small">
-    <div class="container">
-        <p class="has-text-centered">
-            <a
-                    href="/user"
-                    class="button is-info is-medium is-hovered"
-            >Afficher vos informations d'utilisateur
-            </a>
-        </p>
-    </div>
-</section>
-<% } %>
-
-<% if (locals.data) { %>
-<section class="section is-small">
-    <div class="container">
-        <p class="has-text-centered">
-            <a
-                    href="/data-data"
-                    class="button is-info is-medium is-hovered"
-            >Afficher les données récupérées grâce à France Connect
-            </a>
-        </p>
     </div>
 </section>
 <% } %>
