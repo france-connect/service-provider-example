@@ -45,18 +45,22 @@ export const oauthDataCallback = async (req, res, next) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    // store accesstoken in session to be able to reach user's data from home page,
-    // and data to be able to display them on data page
-    req.session.accessToken = accessToken;
+    // store data in session to be able to display them on data page
     req.session.data = data;
 
     return res.redirect('/data');
   } catch (error) {
+    if (error.response && error.response.status === 404) {
+      req.session.data = null;
+
+      return res.redirect('/data');
+    }
+
     return next(error);
   }
 };
 
 export const getData = (req, res) => res.render('pages/data', {
-  data: JSON.stringify(req.session.data, null, 2),
+  data: req.session.data ? JSON.stringify(req.session.data, null, 2) : null,
   dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
 });

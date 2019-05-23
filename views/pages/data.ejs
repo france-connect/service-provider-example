@@ -6,6 +6,7 @@
 
 <section class="section is-small">
     <div class="container">
+        <% if (locals.data) { %>
         <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
         <pre>
             <p><strong><i>Corps des données :</i></strong></p>
@@ -13,6 +14,9 @@
 <%- locals.data %>
             </code>
         </pre>
+        <% } else { %>
+        <h1 class="title">Aucune donnée disponible</h1>
+        <% } %>
         <% if (locals.context) { %>
             <pre>
             <p><strong><i>Accréditation eIDAS :</i></strong></p>
