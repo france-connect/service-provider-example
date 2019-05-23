@@ -50,7 +50,7 @@ export const oauthDataCallback = async (req, res, next) => {
     req.session.accessToken = accessToken;
     req.session.data = data;
 
-    return res.redirect('/data-data');
+    return res.redirect('/data');
   } catch (error) {
     return next(error);
   }

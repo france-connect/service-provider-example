@@ -54,7 +54,7 @@ app.get('/', (req, res) => res.render('pages/home'));
 
 app.get('/login', (req, res) => res.render('pages/login'));
 
-app.post('/login-with-france-connect', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidasLevel)));
+app.post('/login-authorize', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidasLevel)));
 
 app.get('/login-callback', oauthLoginCallback);
 
@@ -62,13 +62,13 @@ app.get('/logout', (req, res) => res.redirect(getLogoutUrl(req.session.idToken))
 
 app.get('/logout-callback', oauthLogoutCallback);
 
-app.get('/data', (req, res) => res.redirect(getAuthorizationUrlForData()));
+app.get('/data-authorize', (req, res) => res.redirect(getAuthorizationUrlForData()));
 
 app.get('/data-callback', oauthDataCallback);
 
 app.get('/user', getUser);
 
-app.get('/data-data', getData);
+app.get('/data', getData);
 
 // Setting app port
 const port = process.env.PORT || '3000';
