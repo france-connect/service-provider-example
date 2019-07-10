@@ -10,12 +10,13 @@ import bodyParser from 'body-parser';
 
 import config from './config';
 import {
-  getAuthorizationUrlForAuthentication,
-  getAuthorizationUrlForData,
-  getLogoutUrl,
-} from './helpers/utils';
-import { oauthLoginCallback, oauthLogoutCallback, getUser } from './controllers/oauthAuthentication';
-import { oauthDataCallback, getData } from './controllers/oauthData';
+  oauthLoginCallback,
+  oauthLogoutCallback,
+  getUser,
+  oauthLoginAuthorize,
+  oauthLogoutAuthorize,
+} from './controllers/oauthAuthentication';
+import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
 
 const app = express();
 
@@ -54,15 +55,15 @@ app.get('/', (req, res) => res.render('pages/home'));
 
 app.get('/login', (req, res) => res.render('pages/login'));
 
-app.post('/login-authorize', (req, res) => res.redirect(getAuthorizationUrlForAuthentication(req.body.eidasLevel)));
+app.post('/login-authorize', oauthLoginAuthorize);
 
 app.get('/login-callback', oauthLoginCallback);
 
-app.get('/logout', (req, res) => res.redirect(getLogoutUrl(req.session.idToken)));
+app.get('/logout', oauthLogoutAuthorize);
 
 app.get('/logout-callback', oauthLogoutCallback);
 
-app.get('/data-authorize', (req, res) => res.redirect(getAuthorizationUrlForData()));
+app.get('/data-authorize', oauthDataAuthorize);
 
 app.get('/data-callback', oauthDataCallback);
 
