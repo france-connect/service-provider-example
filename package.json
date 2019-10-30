@@ -15,6 +15,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.3",
+    "celebrate": "^10.0.1",
     "debug": "^3.1.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",

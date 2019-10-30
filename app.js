@@ -8,7 +8,10 @@ import session from 'express-session';
 import sessionstore from 'sessionstore';
 import bodyParser from 'body-parser';
 
+import { celebrate, Joi, errors } from 'celebrate';
+
 import config from './config';
+import { QUERY_ERROR_REGEX } from './helpers/utils';
 import {
   oauthLoginCallback,
   oauthLogoutCallback,
@@ -16,6 +19,9 @@ import {
   oauthLoginAuthorize,
   oauthLogoutAuthorize,
 } from './controllers/oauthAuthentication';
+import {
+  getLogin,
+} from './controllers/loginController';
 import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
 
 const app = express();
@@ -38,7 +44,6 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.set('view engine', 'ejs');
 
 // pass the user data from session to template global variables
@@ -53,7 +58,12 @@ app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PA
 
 app.get('/', (req, res) => res.render('pages/home'));
 
-app.get('/login', (req, res) => res.render('pages/login'));
+app.get('/login', celebrate({
+  query: {
+    error: Joi.string().valid(Object.keys(config.OPENID_ERRORS)).optional(),
+    error_description: Joi.string().regex(QUERY_ERROR_REGEX).optional(),
+  },
+}), getLogin);
 
 app.post('/login-authorize', oauthLoginAuthorize);
 
@@ -70,6 +80,9 @@ app.get('/data-callback', oauthDataCallback);
 app.get('/user', getUser);
 
 app.get('/data', getData);
+
+// Middleware from Celebrate to handle Error
+app.use(errors());
 
 // Setting app port
 const port = process.env.PORT || '3000';

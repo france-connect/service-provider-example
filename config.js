@@ -18,6 +18,15 @@ const config = {
   FC_SCOPES: 'given_name family_name birthdate gender birthplace birthcountry email preferred_username address phone',
   DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft',
   DGFIP_DATA_FD_PATH: '/situations/ir/assiettes/annrev/2018',
+  OPENID_ERRORS: {
+    invalid_request: 'requête invalide',
+    unauthorized_client: 'client non autorisé',
+    access_denied: 'accès refusé',
+    unsupported_response_type: 'réponse non prise en charge',
+    invalid_scope: 'périmètre invalide',
+    server_error: 'erreur du serveur',
+    temporarily_unavailable: 'service temporairement indisponible',
+  }
 };
 
 

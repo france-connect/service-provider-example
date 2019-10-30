@@ -5,7 +5,7 @@
 import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
-import { getAcrFromIdToken } from '../helpers/utils';
+import { getAcrFromIdToken, transformParams } from '../helpers/utils';
 
 /**
  * Format the url use in the redirection call
@@ -30,7 +30,15 @@ export const oauthLoginAuthorize = (req, res) => {
 export const oauthLoginCallback = async (req, res, next) => {
   // check if the mandatory Authorization code is there
   if (!req.query.code) {
-    return res.sendStatus(400);
+    /**
+     * @throws the request is not authorized
+     * @see https://www.rfc-editor.org/rfc/rfc6749.html#section-4.1.2.1
+     */
+    const params = {
+      error: 'access_denied',
+      error_description: "vous avez invalidé la tentative d'identification, vous êtes maintenant déconnecté de ce service",
+    };
+    return res.redirect(`/login?${transformParams(params)}`);
   }
 
   try {
