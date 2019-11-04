@@ -26,7 +26,7 @@ const config = {
     invalid_scope: 'périmètre invalide',
     server_error: 'erreur du serveur',
     temporarily_unavailable: 'service temporairement indisponible',
-  }
+  },
 };
 
 
