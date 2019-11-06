@@ -64,7 +64,7 @@ describe('GET /login', () => {
         done();
       });
   });
-  it('should return a 400 OK', (done) => {
+  it('should return a 400 Bad Request', (done) => {
     chai.request(app)
       .get('/login?hello=world')
       .end((err, res) => {
@@ -73,7 +73,7 @@ describe('GET /login', () => {
       });
   });
 
-  it('should return a 400 OK with error well formated', (done) => {
+  it('should return a 400 Bad Request with error well formated', (done) => {
     const desc = 'j%27ai%20trouv%C3%A9%20%2B%20d%27une%20erreur%20%26%20200%20cul-de-sac%20%3D%20un%20probl%C3%A8me%20%23grave%20%40franceconnect%3B%20and%20what%20else%20...';
     chai.request(app)
       .get(`/login?error=access_denied&error_description=${desc}`)

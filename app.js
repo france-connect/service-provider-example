@@ -7,9 +7,7 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import bodyParser from 'body-parser';
-
 import { celebrate, Joi, errors } from 'celebrate';
-
 import config from './config';
 import { QUERY_ERROR_REGEX } from './helpers/utils';
 import {
@@ -19,9 +17,7 @@ import {
   oauthLoginAuthorize,
   oauthLogoutAuthorize,
 } from './controllers/oauthAuthentication';
-import {
-  getLogin,
-} from './controllers/loginController';
+import { getLogin } from './controllers/loginController';
 import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
 
 const app = express();

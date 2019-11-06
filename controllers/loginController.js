@@ -18,8 +18,8 @@ export const getLogin = (req, res) => {
 
   const data = {};
   if (error) {
-    const format = config.OPENID_ERRORS[error] || 'erreur inconnue';
-    Object.assign(data, { error: format, errorDescription });
+    const errorTitle = config.OPENID_ERRORS[error] || 'erreur inconnue';
+    Object.assign(data, { error: errorTitle, errorDescription });
   }
 
   return res.render('pages/login', data);
