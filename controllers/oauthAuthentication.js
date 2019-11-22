@@ -2,10 +2,15 @@
  * Helper to get an access token from France Connect.
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
+import Joi from '@hapi/joi';
 import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
-import { getAcrFromIdToken, transformParams } from '../helpers/utils';
+import {
+  getAcrFromIdToken,
+  QUERY_ERROR_REGEX,
+  QUERY_CODE_REGEX,
+} from '../helpers/utils';
 
 /**
  * Format the url use in the redirection call
@@ -13,7 +18,9 @@ import { getAcrFromIdToken, transformParams } from '../helpers/utils';
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
 export const oauthLoginAuthorize = (req, res) => {
-  const eidasQueryString = req.body.eidasLevel ? `&acr_values=${req.body.eidasLevel}` : '';
+  const eidasQueryString = req.body.eidasLevel
+    ? `&acr_values=${req.body.eidasLevel}`
+    : '';
 
   return res.redirect(
     `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
@@ -28,22 +35,80 @@ export const oauthLoginAuthorize = (req, res) => {
  * Make every http call to the different API endpoints.
  */
 export const oauthLoginCallback = async (req, res, next) => {
-  // check if the mandatory Authorization code is there
-  if (!req.query.code) {
-    /**
-     * @throws the request is not authorized
-     * @see https://www.rfc-editor.org/rfc/rfc6749.html#section-4.1.2.1
-     */
-    const params = {
-      error: 'access_denied',
-      error_description: "vous avez invalidé la tentative d'identification, vous êtes maintenant déconnecté de ce service",
-    };
-    return res.redirect(`/login?${transformParams(params)}`);
+  /**
+   * OpenID Connect standard errors
+   * @see @link{https://www.rfc-editor.org/rfc/rfc6749.html#section-4.1.2.1}
+   */
+
+  // 1 - get only the interesting params
+  const { query, params, body } = req;
+  const inputs = { query, params, body };
+
+  // 2 - define how the params should be.
+  const callbackSchema = Joi.object({
+    query: {
+      error: Joi.string()
+        .valid(...Object.keys(config.OPENID_ERRORS))
+        .optional(),
+      error_description: Joi.string()
+        .regex(QUERY_ERROR_REGEX)
+        .optional(),
+      code: Joi.string()
+        .regex(QUERY_CODE_REGEX)
+        .optional(),
+      state: Joi.string()
+        .regex(/^[0-9a-zA-Z]+$/)
+        .optional(),
+    },
+    body: Joi.object().length(0),
+    params: Joi.object().length(0),
+  });
+
+  // 3 - validate the inputs
+  const { error: inputsError, value } = callbackSchema.validate(inputs);
+
+  // 4 - if the validation failed, this is a bad request
+  if (inputsError) {
+    const status = 400;
+    return res.status(status).render('pages/error/4xx.ejs', {
+      status,
+      error: 'Bad request',
+      errorDescription: "La requête n'est pas correctement formattée",
+    });
+  }
+
+
+  // 5 - we grab the meaningful params
+  const {
+    query: { code, error, error_description: errorDescription },
+  } = value;
+
+  /**
+   * @throws the request is not authorized
+   * @see https://www.rfc-editor.org/rfc/rfc6749.html#section-4.1.2.1
+   */
+
+  // 6 - we redirect with an error page
+  if (error) {
+    const status = 403;
+    const errorTitle = config.OPENID_ERRORS[error] || 'erreur inconnue';
+    const data = { status, error: errorTitle, errorDescription };
+    return res.status(status).render('pages/error/4xx.ejs', data);
+  }
+
+  // 7 - if the request doesn't contain Authorization code we display an error
+  if (!code) {
+    const status = 400;
+    return res.status(status).render('pages/error/4xx.ejs', {
+      status,
+      error: 'Bad request',
+      errorDescription: "La requête n'est pas correctement formattée",
+    });
   }
 
   try {
     // Set request params
-    const body = {
+    const bodyRequest = {
       grant_type: 'authorization_code',
       redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
       client_id: config.AUTHENTICATION_CLIENT_ID,
@@ -52,10 +117,12 @@ export const oauthLoginCallback = async (req, res, next) => {
     };
 
     // Request access token.
-    const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
+    const {
+      data: { access_token: accessToken, id_token: idToken },
+    } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: querystring.stringify(body),
+      data: querystring.stringify(bodyRequest),
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
@@ -77,8 +144,8 @@ export const oauthLoginCallback = async (req, res, next) => {
     req.session.idToken = idToken;
 
     return res.redirect('/user');
-  } catch (error) {
-    return next(error);
+  } catch (errorToken) {
+    return next(errorToken);
   }
 };
 
@@ -86,7 +153,8 @@ export const getUser = (req, res) => res.render('pages/data', {
   user: req.session.user,
   data: JSON.stringify(req.session.user, null, 2),
   context: JSON.stringify(req.session.context, null, 2),
-  dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+  dataLink:
+      'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
 });
 
 /**
@@ -94,15 +162,16 @@ export const getUser = (req, res) => res.render('pages/data', {
  * @returns {string}
  */
 export const oauthLogoutAuthorize = (req, res) => {
-  const { session: { idToken } } = req;
+  const {
+    session: { idToken },
+  } = req;
 
   return res.redirect(
     `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`
-    + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
-    + `${config.LOGOUT_CALLBACK_FS_PATH}`,
+      + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
+      + `${config.LOGOUT_CALLBACK_FS_PATH}`,
   );
 };
-
 
 export const oauthLogoutCallback = (req, res) => {
   // Empty session
