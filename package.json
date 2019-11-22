@@ -9,13 +9,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@hapi/joi": "^16.1.7",
     "axios": "^0.19.0",
     "axios-logger": "^1.0.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.3",
-    "celebrate": "^10.0.1",
     "debug": "^3.1.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
