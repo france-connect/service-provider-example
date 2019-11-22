@@ -24,22 +24,22 @@ describe('GET /callback', () => {
   beforeEach(initializeMocks);
   afterEach(cleanMocks);
 
-  it('should return 302 when no code is provided', (done) => {
+  it('should return 400 when no code is provided', (done) => {
     chai.request(app)
       .get('/login-callback')
       .redirects(0)
       .end((err, res) => {
-        expect(res).to.have.status(302);
+        expect(res).to.have.status(400);
         done();
       });
   });
 
-  it('should return 500 when using an invalid code', (done) => {
+  it('should return 400 when using an invalid code', (done) => {
     chai.request(app)
       .get(`/login-callback?code=${invalidTokenConf.requestBodyQuery.code}&state=customState11`)
       .redirects(0)
       .end((err, res) => {
-        expect(res).to.have.status(500);
+        expect(res).to.have.status(400);
         done();
       });
   });
@@ -75,10 +75,12 @@ describe('GET /login', () => {
 
   it('should return a 400 Bad Request with error well formated', (done) => {
     const desc = 'j%27ai%20trouv%C3%A9%20%2B%20d%27une%20erreur%20%26%20200%20cul-de-sac%20%3D%20un%20probl%C3%A8me%20%23grave%20%40franceconnect%3B%20and%20what%20else%20...';
+    const descDecoded = 'j&#39;ai trouvé + d&#39;une erreur &amp; 200 cul-de-sac = un problème #grave @franceconnect; and what else ...';
     chai.request(app)
       .get(`/login?error=access_denied&error_description=${desc}`)
       .end((err, res) => {
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(400);
+        expect(res.text).to.include(descDecoded);
         done();
       });
   });
