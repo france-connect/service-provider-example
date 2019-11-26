@@ -74,6 +74,10 @@ The allowed callback URL with this key are listed bellow :
 - http://localhost:8080/callback
 - http://localhost:1337/callback
 - http://localhost:3000/callback
+- http://localhost:4242/callback.php
+- http://localhost:8080/callback.php
+- http://localhost:1337/callback.php
+- http://localhost:3000/callback.php
 - http://localhost:1337/login-callback
 - http://localhost:4242/login-callback
 - http://localhost:8080/login-callback
