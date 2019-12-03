@@ -7,9 +7,7 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import bodyParser from 'body-parser';
-
 import config from './config';
-
 import {
   oauthLoginCallback,
   oauthLogoutCallback,
@@ -21,6 +19,7 @@ import {
   getLogin,
 } from './controllers/loginController';
 import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
+import validateLoginCallback from './validators/loginCallbackValidator';
 
 const app = express();
 
@@ -60,7 +59,7 @@ app.get('/login', getLogin);
 
 app.post('/login-authorize', oauthLoginAuthorize);
 
-app.get('/login-callback', oauthLoginCallback);
+app.get('/login-callback', validateLoginCallback, oauthLoginCallback);
 
 app.get('/logout', oauthLogoutAuthorize);
 
