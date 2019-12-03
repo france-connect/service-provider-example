@@ -71,8 +71,8 @@ export const oauthLoginCallback = async (req, res, next) => {
     req.session.idToken = idToken;
 
     return res.redirect('/user');
-  } catch (errorToken) {
-    return next(errorToken);
+  } catch (tokenError) {
+    return next(tokenError);
   }
 };
 
