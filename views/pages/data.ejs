@@ -1,51 +1,53 @@
 <!doctype html>
 <html lang="en">
 <% include ../includes/head.ejs %>
-<body>
-<% include ../includes/header.ejs %>
 
-<section class="section is-small">
+<body>
+  <% include ../includes/header.ejs %>
+
+  <section class="section is-small">
     <div class="container">
-        <% if (locals.data) { %>
-        <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
-        <pre>
+      <% if (locals.data) { %>
+      <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
+      <pre>
             <p><strong><i>Corps des données :</i></strong></p>
             <code class="json">
 <%- locals.data %>
             </code>
         </pre>
-        <% } else { %>
-        <h1 class="title">Aucune donnée disponible</h1>
-        <% } %>
-        <% if (locals.context) { %>
-            <pre>
+      <% } else { %>
+      <h1 class="title">Aucune donnée disponible</h1>
+      <% } %>
+      <% if (locals.context) { %>
+      <pre>
             <p><strong><i>Accréditation eIDAS :</i></strong></p>
             <code class="json">
 <%- locals.context %>
             </code>
         </pre>
-        <% } %>
-        <p class="has-text-centered">
-            <a href="<%= locals.dataLink %>">
-                Voir les données disponibles
-            </a>
-        </p>
+      <% } %>
+      <p class="has-text-centered">
+        <a href="<%= locals.dataLink %>">
+          Voir les données disponibles
+        </a>
+      </p>
     </div>
-</section>
+  </section>
 
-<section class="section is-small">
+  <section class="section is-small">
     <div class="container">
-        <p class="has-text-centered">
-            <a href="/" class="button is-large is-link">
-                Revenir sur la page d'accueil
-            </a>
-        </p>
+      <p class="has-text-centered">
+        <a href="/" class="button is-large is-link">
+          Revenir sur la page d'accueil
+        </a>
+      </p>
     </div>
-</section>
+  </section>
 
-<% include ../includes/footer.ejs %>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+  <% include ../includes/footer.ejs %>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 </body>
+
 </html>

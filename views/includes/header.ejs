@@ -1,31 +1,27 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-start">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                <img src="/img/fc_logo_v2.png" alt="Démonstrateur Fournisseur de Service"  height="28">
-            </a>
-        </div>
-        <a href="/" class="navbar-item">
-            Home
+  <div class="navbar-start">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="/img/fc_logo_v2.png" alt="Démonstrateur Fournisseur de Service" height="28">
+      </a>
+    </div>
+    <a href="/" class="navbar-item">
+      Home
+    </a>
+  </div>
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <% if (locals.user) { %>
+      <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
+        <a href="#" class="has-text-link">
+          <%= locals.user.family_name %> <%= locals.user.given_name %>
         </a>
+      </div>
+      <% } else { %>
+      <div class="buttons">
+        <a class="button is-light" href="/login">Se connecter</a>
+      </div>
+      <% } %>
     </div>
-    <div class="navbar-end">
-        <div class="navbar-item">
-            <% if (locals.user) { %>
-                <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
-                    <a
-                        href="#"
-                        class="has-text-link"
-
-                    >
-                        <%= locals.user.family_name %> <%= locals.user.given_name %>
-                    </a>
-                </div>
-            <% } else { %>
-                <div class="buttons">
-                    <a class="button is-light" href="/login">Se connecter</a>
-                </div>
-            <% } %>
-        </div>
-    </div>
+  </div>
 </nav>

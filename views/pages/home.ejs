@@ -1,176 +1,171 @@
 <!doctype html>
 <html lang="en">
 <% include ../includes/head.ejs %>
+
 <body>
-<% include ../includes/header.ejs %>
+  <% include ../includes/header.ejs %>
 
-<section class="hero is-info is-small">
+  <section class="hero is-info is-small">
     <div class="hero-body">
-        <div class="container">
-            <h1 class="title is-1">
-                Bienvenue sur le démonstrateur de fournisseur de service
-            </h1>
-        </div>
+      <div class="container">
+        <h1 class="title is-1">
+          Bienvenue sur le démonstrateur de fournisseur de service
+        </h1>
+      </div>
     </div>
-</section>
+  </section>
 
-<% if (locals.user) { %>
-<section class="section is-small">
+  <% if (locals.user) { %>
+  <section class="section is-small">
     <div class="container">
-        <p class="has-text-centered">
-            <a
-                    href="/user"
-                    class="button is-info is-medium is-hovered"
-            >Afficher vos informations d'utilisateur
-            </a>
-        </p>
+      <p class="has-text-centered">
+        <a href="/user" class="button is-info is-medium is-hovered">Afficher vos informations d'utilisateur
+        </a>
+      </p>
     </div>
-</section>
-<% } else { %>
-<section class="section is-small">
+  </section>
+  <% } else { %>
+  <section class="section is-small">
     <div class="container">
-        <h2 class="title is-2">Connectez-vous via FranceConnect</h2>
-        <div class="tile is-ancestor">
-            <div class="tile is-vertical">
-                <div class="tile">
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification">
-                            <p class="title">1. Cliquez</p>
-                            <p class="subtitle">sur le bouton FranceConnect</p>
-                            <div class="has-text-centered content is-vcentered">
-                              <!-- FC btn -->
-                                <a href="/login" data-role="login">
-                                    <img src="/img/FCboutons-10.svg" alt="">
-                                </a>
-                                <p style="margin-top: 2em;">
-                                    <a href="https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service">
-                                        Documentation générale de FranceConnect
-                                    </a>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification">
-                            <p class="title">2. Sélectionnez</p>
-                            <p class="subtitle">le compte "Démonstration"</p>
-                            <div class="has-text-centered content">
-                                <figure class="image">
-                                    <img src="/img/logoPartner-v2.png">
-                                </figure>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification">
-                            <p class="title">3. Renseignez</p>
-                            <p class="subtitle">les identifiants de test</p>
-                            <div class="has-text-centered content">
-                                <figure class="image">
-                                    <img src="/img/how-it-works-form.png" class="image is-128x128">
-                                </figure>
-                                <p style="margin-top: 2em;">
-                                    <a href="https://github.com/france-connect/identity-provider-example/blob/master/database.csv">
-                                        Voir les identifiants de test disponibles
-                                    </a>
-                                </p>
-                                <p style="margin-top: 1em;">
-                                    <a href="Comment_créer_de_nouveaux_comptes_test.docx.pdf" target="_blank">
-                                        Tutoriel pour créer des identifiants test
-                                    </a>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
+      <h2 class="title is-2">Connectez-vous via FranceConnect</h2>
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical">
+          <div class="tile">
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">1. Cliquez</p>
+                <p class="subtitle">sur le bouton FranceConnect</p>
+                <div class="has-text-centered content is-vcentered">
+                  <!-- FC btn -->
+                  <a href="/login" data-role="login">
+                    <img src="/img/FCboutons-10.svg" alt="">
+                  </a>
+                  <p style="margin-top: 2em;">
+                    <a href="https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service">
+                      Documentation générale de FranceConnect
+                    </a>
+                  </p>
                 </div>
+              </article>
             </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">2. Sélectionnez</p>
+                <p class="subtitle">le compte "Démonstration"</p>
+                <div class="has-text-centered content">
+                  <figure class="image">
+                    <img src="/img/logoPartner-v2.png">
+                  </figure>
+                </div>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">3. Renseignez</p>
+                <p class="subtitle">les identifiants de test</p>
+                <div class="has-text-centered content">
+                  <figure class="image">
+                    <img src="/img/how-it-works-form.png" class="image is-128x128">
+                  </figure>
+                  <p style="margin-top: 2em;">
+                    <a href="https://github.com/france-connect/identity-provider-example/blob/master/database.csv">
+                      Voir les identifiants de test disponibles
+                    </a>
+                  </p>
+                  <p style="margin-top: 1em;">
+                    <a href="Comment_créer_de_nouveaux_comptes_test.docx.pdf" target="_blank">
+                      Tutoriel pour créer des identifiants test
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</section>
-<% } %>
+  </section>
+  <% } %>
 
-<% if (locals.data) { %>
-<section class="section is-small">
+  <% if (locals.data) { %>
+  <section class="section is-small">
     <div class="container">
-        <p class="has-text-centered">
-            <a
-                    href="/data"
-                    class="button is-info is-medium is-hovered"
-            >Afficher les données récupérées grâce à France Connect
-            </a>
-        </p>
+      <p class="has-text-centered">
+        <a href="/data" class="button is-info is-medium is-hovered">Afficher les données récupérées grâce à France Connect</a>
+      </p>
     </div>
-</section>
-<% } else { %>
-<section class="section is-small">
+  </section>
+  <% } else { %>
+  <section class="section is-small">
     <div class="container">
-        <h2 class="title is-2">Récupérez vos données via une API FranceConnectée</h2>
-        <div class="tile is-ancestor">
-            <div class="tile is-vertical">
-                <div class="tile">
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification">
-                            <p class="title">1. Cliquez</p>
-                            <p class="subtitle">sur le bouton ci-dessous</p>
-                            <div class="has-text-centered content">
-                                <!--
-                                  FC btn
-                                  WARNING : if change keep this id(id="dataBtn"),
-                                  because it is used in cypress integration test suite in FC core
-                                -->
-                                <a href="/data-authorize" id="dataBtn">
-                                    <img src="img/FCboutons-data.svg" alt="">
-                                </a>
-                                <p style="margin-top: 2em;">
-                                    <a href="https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service">
-                                        Documentation générale de FranceConnect
-                                    </a>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification">
-                            <p class="title">2. Sélectionnez</p>
-                            <p class="subtitle">le compte "Démonstration"</p>
-                            <div class="has-text-centered content">
-                                <figure class="image">
-                                    <img src="/img/identity-provider-button.jpg">
-                                </figure>
-                                <p style="margin-top: 2em;">
-                                    <a href="https://github.com/france-connect/identity-provider-example">
-                                        Voir le code source du fournisseur d'identité "Démonstration"
-                                    </a>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child notification">
-                            <p class="title">3. Renseignez</p>
-                            <p class="subtitle">les identifiants de test</p>
-                            <div class="has-text-centered content">
-                                <figure class="image">
-                                    <img src="/img/test-credentials.jpg">
-                                </figure>
-                                <p style="margin-top: 2em;">
-                                    <a href="https://github.com/france-connect/identity-provider-example/blob/master/database.csv">
-                                        Voir les identifiants de test disponibles
-                                    </a>
-                                </p>
-                            </div>
-                        </article>
-                    </div>
+      <h2 class="title is-2">Récupérez vos données via une API FranceConnectée</h2>
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical">
+          <div class="tile">
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">1. Cliquez</p>
+                <p class="subtitle">sur le bouton ci-dessous</p>
+                <div class="has-text-centered content">
+                  <!--
+                    FC btn
+                    WARNING : if change keep this id(id="dataBtn"),
+                    because it is used in cypress integration test suite in FC core
+                  -->
+                  <a href="/data-authorize" id="dataBtn">
+                    <img src="img/FCboutons-data.svg" alt="">
+                  </a>
+                  <p style="margin-top: 2em;">
+                    <a href="https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service">
+                      Documentation générale de FranceConnect
+                    </a>
+                  </p>
                 </div>
+              </article>
             </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">2. Sélectionnez</p>
+                <p class="subtitle">le compte "Démonstration"</p>
+                <div class="has-text-centered content">
+                  <figure class="image">
+                    <img src="/img/identity-provider-button.jpg">
+                  </figure>
+                  <p style="margin-top: 2em;">
+                    <a href="https://github.com/france-connect/identity-provider-example">
+                      Voir le code source du fournisseur d'identité "Démonstration"
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification">
+                <p class="title">3. Renseignez</p>
+                <p class="subtitle">les identifiants de test</p>
+                <div class="has-text-centered content">
+                  <figure class="image">
+                    <img src="/img/test-credentials.jpg">
+                  </figure>
+                  <p style="margin-top: 2em;">
+                    <a href="https://github.com/france-connect/identity-provider-example/blob/master/database.csv">
+                      Voir les identifiants de test disponibles
+                    </a>
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</section>
-<% } %>
-<% include ../includes/footer.ejs %>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
-<script src="/js/home.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+  </section>
+  <% } %>
+  <% include ../includes/footer.ejs %>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script src="/js/home.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 </body>
+
 </html>
