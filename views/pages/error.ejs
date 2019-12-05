@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<% include ../includes/head.ejs %>
+
+<body>
+  <% include ../includes/header.ejs %>
+  <section
+    class="hero notification is-<%= locals.status ? (String(locals.status).startsWith('4') ? 'warning': 'danger'): 'danger' %> has-text-centered">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title"><%= error %></h1>
+        <% if (locals.errorDescription) { %>
+        <h2 class="subtitle is-italic">
+          <%= errorDescription %>
+        </h2>
+        <% } %>
+        <p> Une erreur <%= locals.status ? '('+status+')': '' %> a eu lieu. Merci de retourner sur la page d'<a
+            href='/login'>accueil</a></p>
+      </div>
+    </div>
+  </section>
+  <% include ../includes/footer.ejs %>
+</body>
+
+</html>

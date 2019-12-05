@@ -18,7 +18,15 @@ const config = {
   FC_SCOPES: 'given_name family_name birthdate gender birthplace birthcountry email preferred_username address phone',
   DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft',
   DGFIP_DATA_FD_PATH: '/situations/ir/assiettes/annrev/2018',
+  OPENID_ERRORS: [
+    'invalid_request',
+    'unauthorized_client',
+    'access_denied',
+    'unsupported_response_type',
+    'invalid_scope',
+    'server_error',
+    'temporarily_unavailable',
+  ],
 };
-
 
 export default config;

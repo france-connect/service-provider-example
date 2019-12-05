@@ -2,10 +2,13 @@
  * Helper to get an access token from France Connect.
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
+
 import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
-import { getAcrFromIdToken } from '../helpers/utils';
+import {
+  getAcrFromIdToken,
+} from '../helpers/utils';
 
 /**
  * Format the url use in the redirection call
@@ -28,14 +31,9 @@ export const oauthLoginAuthorize = (req, res) => {
  * Make every http call to the different API endpoints.
  */
 export const oauthLoginCallback = async (req, res, next) => {
-  // check if the mandatory Authorization code is there
-  if (!req.query.code) {
-    return res.sendStatus(400);
-  }
-
   try {
     // Set request params
-    const body = {
+    const bodyRequest = {
       grant_type: 'authorization_code',
       redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
       client_id: config.AUTHENTICATION_CLIENT_ID,
@@ -47,7 +45,7 @@ export const oauthLoginCallback = async (req, res, next) => {
     const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: querystring.stringify(body),
+      data: querystring.stringify(bodyRequest),
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
@@ -69,8 +67,8 @@ export const oauthLoginCallback = async (req, res, next) => {
     req.session.idToken = idToken;
 
     return res.redirect('/user');
-  } catch (error) {
-    return next(error);
+  } catch (tokenError) {
+    return next(tokenError);
   }
 };
 
@@ -90,11 +88,10 @@ export const oauthLogoutAuthorize = (req, res) => {
 
   return res.redirect(
     `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`
-    + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
-    + `${config.LOGOUT_CALLBACK_FS_PATH}`,
+      + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
+      + `${config.LOGOUT_CALLBACK_FS_PATH}`,
   );
 };
-
 
 export const oauthLogoutCallback = (req, res) => {
   // Empty session

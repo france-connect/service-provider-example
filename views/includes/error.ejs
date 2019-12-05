@@ -1,0 +1,31 @@
+<% if (locals.error) { %>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hero.notification .delete')
+      .forEach(($delete) => {
+        $notification = $delete.parentNode;
+        $delete.addEventListener('click', () => {
+          $notification.parentNode.removeChild($notification);
+        });
+      });
+  });	
+</script>
+<style>
+  h1::first-letter {
+    text-transform: uppercase;
+  }
+</style>
+<section class="hero notification is-danger has-text-centered">
+  <button class="delete"></button>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title"><%= error %></h1>
+      <% if (locals.errorDescription) { %>
+      <h2 class="subtitle is-italic">
+        <%= errorDescription %>
+      </h2>
+      <% } %>
+    </div>
+  </div>
+</section>
+<% } %>

@@ -27,7 +27,7 @@ export const validTokenConf = {
     redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`, // encodeURIComponent(`${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`),
     client_id: config.CLIENT_ID,
     client_secret: config.CLIENT_SECRET,
-    code: '5b55b5616c607ee6b84d0cec2a8b82c58f31a03d17264d4e294ae14413a2f19b',
+    code: 'f272e27c-0d47-11ea-9a9f-362b9e155667',
   },
   responseBody: {
     access_token: 'ae3b27ba14bdc9f864f5c5e396b507c1c1064fc951eb68bb8bab6283e81e7d75',

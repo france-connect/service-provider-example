@@ -7,7 +7,6 @@ import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
 import bodyParser from 'body-parser';
-
 import config from './config';
 import {
   oauthLoginCallback,
@@ -17,6 +16,7 @@ import {
   oauthLogoutAuthorize,
 } from './controllers/oauthAuthentication';
 import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
+import validateCallbackParamsMiddleware from './validators/loginCallbackValidator';
 
 const app = express();
 
@@ -38,7 +38,6 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 app.set('view engine', 'ejs');
 
 // pass the user data from session to template global variables
@@ -53,11 +52,11 @@ app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PA
 
 app.get('/', (req, res) => res.render('pages/home'));
 
-app.get('/login', (req, res) => res.render('pages/login'));
+app.get('/login', (req, res) => res.status(200).render('pages/login', {}));
 
 app.post('/login-authorize', oauthLoginAuthorize);
 
-app.get('/login-callback', oauthLoginCallback);
+app.get('/login-callback', validateCallbackParamsMiddleware, oauthLoginCallback);
 
 app.get('/logout', oauthLogoutAuthorize);
 
