@@ -16,9 +16,7 @@ import {
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
 export const oauthLoginAuthorize = (req, res) => {
-  const eidasQueryString = req.body.eidasLevel
-    ? `&acr_values=${req.body.eidasLevel}`
-    : '';
+  const eidasQueryString = req.body.eidasLevel ? `&acr_values=${req.body.eidasLevel}` : '';
 
   return res.redirect(
     `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
@@ -44,9 +42,7 @@ export const oauthLoginCallback = async (req, res, next) => {
     };
 
     // Request access token.
-    const {
-      data: { access_token: accessToken, id_token: idToken },
-    } = await httpClient({
+    const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: querystring.stringify(bodyRequest),
@@ -80,8 +76,7 @@ export const getUser = (req, res) => res.render('pages/data', {
   user: req.session.user,
   data: JSON.stringify(req.session.user, null, 2),
   context: JSON.stringify(req.session.context, null, 2),
-  dataLink:
-      'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+  dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
 });
 
 /**
@@ -89,9 +84,7 @@ export const getUser = (req, res) => res.render('pages/data', {
  * @returns {string}
  */
 export const oauthLogoutAuthorize = (req, res) => {
-  const {
-    session: { idToken },
-  } = req;
+  const { session: { idToken } } = req;
 
   return res.redirect(
     `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`

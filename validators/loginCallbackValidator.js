@@ -26,12 +26,12 @@ const getErrorTitle = (key, langs) => {
 /**
  * OpenID Connect standard errors
  * @see @link{https://www.rfc-editor.org/rfc/rfc6749.html#section-4.1.2.1}
- *
- * l'idée ici présente est de vous montrer un cas de figure: le traitement d'un retour
- * négatif de la procédure d'authentification avec FranceConnect. l'erreur que vous
- * recevrez contiendra un nom d'erreur (ici error) et un description de l'erreur, précisant
- * la démarche (error_descrition). Nous utilisons Joi, célèbre bibliothèque de validation
- * de données pour simplifier la vérification de la requête de retour.
+ * the present idea is to show you a case: the treatment of a negative
+ * return of the authentication process with FranceConnect.
+ * The error you will get will contain an error name (here error) and a
+ * description of the error, for more details about it (error_descrition).
+ * We use Joi, the famous data validation library to simplify verification
+ * of the return request.
  */
 const validateLogin = (req, res, next) => {
   // 1 - get only the interesting params

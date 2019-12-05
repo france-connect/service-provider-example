@@ -15,11 +15,8 @@ import {
   oauthLoginAuthorize,
   oauthLogoutAuthorize,
 } from './controllers/oauthAuthentication';
-import {
-  getLogin,
-} from './controllers/loginController';
 import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
-import validateLoginCallback from './validators/loginCallbackValidator';
+import validateCallbackParamsMiddleware from './validators/loginCallbackValidator';
 
 const app = express();
 
@@ -55,11 +52,11 @@ app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PA
 
 app.get('/', (req, res) => res.render('pages/home'));
 
-app.get('/login', getLogin);
+app.get('/login', (req, res) => res.status(200).render('pages/login', {}));
 
 app.post('/login-authorize', oauthLoginAuthorize);
 
-app.get('/login-callback', validateLoginCallback, oauthLoginCallback);
+app.get('/login-callback', validateCallbackParamsMiddleware, oauthLoginCallback);
 
 app.get('/logout', oauthLogoutAuthorize);
 
