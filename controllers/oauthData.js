@@ -9,11 +9,12 @@ import config from '../config';
  */
 export const oauthDataAuthorize = (req, res) => {
   const eidasQueryString = '&acr_values=eidas1';
+  const scopes = encodeURIComponent(`${config.MANDATORY_SCOPES} ${config.DGFIP_SCOPES}`);
 
   return res.redirect(
     `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
       + `response_type=code&client_id=${config.DATA_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-      + `${config.DATA_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.DGFIP_SCOPES}&state=home&nonce=customNonce11`
+      + `${config.DATA_CALLBACK_FS_PATH}&scope=${scopes}&state=home&nonce=customNonce11`
       + `${eidasQueryString}`,
   );
 };

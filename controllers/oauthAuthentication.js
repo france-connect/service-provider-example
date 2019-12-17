@@ -10,11 +10,12 @@ import { getPayloadOfIdToken } from '../helpers/utils';
  */
 export const oauthLoginAuthorize = (req, res) => {
   const eidasQueryString = req.body.eidasLevel ? `&acr_values=${req.body.eidasLevel}` : '';
+  const scopes = encodeURIComponent(`${config.MANDATORY_SCOPES} ${config.FC_SCOPES}`);
 
   return res.redirect(
     `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
       + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-      + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.FC_SCOPES}&state=home&nonce=customNonce11`
+      + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${scopes}&state=home&nonce=customNonce11`
       + `${eidasQueryString}`,
   );
 };
@@ -56,8 +57,8 @@ export const oauthLoginCallback = async (req, res, next) => {
     req.session.idToken = idToken;
 
     return res.redirect('/user');
-  } catch (tokenError) {
-    return next(tokenError);
+  } catch (error) {
+    return next(error);
   }
 };
 
