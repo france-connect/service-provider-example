@@ -16,7 +16,7 @@ import {
   oauthLogoutAuthorize,
 } from './controllers/oauthAuthentication';
 import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
-import validateCallbackParamsMiddleware from './validators/loginCallbackValidator';
+import { callbackParamsValidatorMiddleware } from './validators/callbackParams';
 
 const app = express();
 
@@ -56,7 +56,7 @@ app.get('/login', (req, res) => res.status(200).render('pages/login', {}));
 
 app.post('/login-authorize', oauthLoginAuthorize);
 
-app.get('/login-callback', validateCallbackParamsMiddleware, oauthLoginCallback);
+app.get('/login-callback', callbackParamsValidatorMiddleware, oauthLoginCallback);
 
 app.get('/logout', oauthLogoutAuthorize);
 
@@ -64,7 +64,7 @@ app.get('/logout-callback', oauthLogoutCallback);
 
 app.get('/data-authorize', oauthDataAuthorize);
 
-app.get('/data-callback', oauthDataCallback);
+app.get('/data-callback', callbackParamsValidatorMiddleware, oauthDataCallback);
 
 app.get('/user', getUser);
 

@@ -18,11 +18,11 @@
       <% } else { %>
       <h1 class="title">Aucune donnée disponible</h1>
       <% } %>
-      <% if (locals.context) { %>
+      <% if (locals.eIDASLevel) { %>
       <pre>
             <p><strong><i>Accréditation eIDAS :</i></strong></p>
             <code class="json">
-<%- locals.context %>
+<%- locals.eIDASLevel %>
             </code>
         </pre>
       <% } %>
