@@ -1,14 +1,7 @@
-/**
- * Helper to get an access token from France Connect.
- * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
- */
-
 import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
-import {
-  getAcrFromIdToken,
-} from '../helpers/utils';
+import { getPayloadOfIdToken } from '../helpers/utils';
 
 /**
  * Format the url use in the redirection call
@@ -17,23 +10,20 @@ import {
  */
 export const oauthLoginAuthorize = (req, res) => {
   const eidasQueryString = req.body.eidasLevel ? `&acr_values=${req.body.eidasLevel}` : '';
+  const scopes = encodeURIComponent(`${config.MANDATORY_SCOPES} ${config.FC_SCOPES}`);
 
   return res.redirect(
     `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
       + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-      + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.FC_SCOPES}&state=home&nonce=customNonce11`
+      + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${scopes}&state=home&nonce=customNonce11`
       + `${eidasQueryString}`,
   );
 };
 
-/**
- * Init FranceConnect authentication login process.
- * Make every http call to the different API endpoints.
- */
 export const oauthLoginCallback = async (req, res, next) => {
   try {
     // Set request params
-    const bodyRequest = {
+    const body = {
       grant_type: 'authorization_code',
       redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
       client_id: config.AUTHENTICATION_CLIENT_ID,
@@ -45,7 +35,7 @@ export const oauthLoginCallback = async (req, res, next) => {
     const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: querystring.stringify(bodyRequest),
+      data: querystring.stringify(body),
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
@@ -60,22 +50,22 @@ export const oauthLoginCallback = async (req, res, next) => {
       url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
     });
 
-    // Store the user in session so it is available for future requests
-    // as the idToken for Logout, and the context
+    // Store the user and context in session so it is available for future requests
+    // as the idToken for Logout
     req.session.user = user;
-    req.session.context = { acr: getAcrFromIdToken(idToken) };
+    req.session.idTokenPayload = getPayloadOfIdToken(idToken);
     req.session.idToken = idToken;
 
     return res.redirect('/user');
-  } catch (tokenError) {
-    return next(tokenError);
+  } catch (error) {
+    return next(error);
   }
 };
 
 export const getUser = (req, res) => res.render('pages/data', {
   user: req.session.user,
   data: JSON.stringify(req.session.user, null, 2),
-  context: JSON.stringify(req.session.context, null, 2),
+  eIDASLevel: JSON.stringify(req.session.idTokenPayload.acr, null, 2),
   dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
 });
 

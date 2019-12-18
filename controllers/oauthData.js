@@ -7,26 +7,19 @@ import config from '../config';
  * to the France Connect Authorization and logout API endpoint.
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
-export const oauthDataAuthorize = (req, res) => (
-  res.redirect(
+export const oauthDataAuthorize = (req, res) => {
+  const eidasQueryString = '&acr_values=eidas1';
+  const scopes = encodeURIComponent(`${config.MANDATORY_SCOPES} ${config.DGFIP_SCOPES}`);
+
+  return res.redirect(
     `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
-    + `response_type=code&client_id=${config.DATA_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-    + `${config.DATA_CALLBACK_FS_PATH}&scope=${config.MANDATORY_SCOPES} ${config.DGFIP_SCOPES}&state=home&nonce=customNonce11`,
-  )
-);
+      + `response_type=code&client_id=${config.DATA_CLIENT_ID}&redirect_uri=${config.FS_URL}`
+      + `${config.DATA_CALLBACK_FS_PATH}&scope=${scopes}&state=home&nonce=customNonce11`
+      + `${eidasQueryString}`,
+  );
+};
 
-/**
- * Use to send the access token to an data provider.
- * @return Response with the queried data from the provider.
- * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-donnees }
- * @see @link{ https://github.com/france-connect/data-providers-examples }
- */
 export const oauthDataCallback = async (req, res, next) => {
-  // check if the mandatory Authorization code is there
-  if (!req.query.code) {
-    return res.sendStatus(400);
-  }
-
   try {
     // Set request params
     const body = {
@@ -38,14 +31,14 @@ export const oauthDataCallback = async (req, res, next) => {
     };
 
     // Request access token.
-    const { data: { access_token: accessToken } } = await httpClient({
+    const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       data: querystring.stringify(body),
       url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
     });
 
-    if (!accessToken) {
+    if (!accessToken || !idToken) {
       return res.sendStatus(401);
     }
 

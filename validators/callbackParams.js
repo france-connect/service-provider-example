@@ -1,12 +1,7 @@
 import Joi from '@hapi/joi';
 import { readdirSync } from 'fs';
-import {
-  QUERY_ERROR_REGEX,
-  QUERY_CODE_REGEX,
-} from '../helpers/utils';
-// eslint-disable-next-line import/named
+import { QUERY_ERROR_REGEX, QUERY_CODE_REGEX } from '../helpers/utils';
 import config from '../config';
-
 
 /**
  * Get error's title translated from locales files
@@ -29,11 +24,11 @@ const getErrorTitle = (key, langs) => {
  * the present idea is to show you a case: the treatment of a negative
  * return of the authentication process with FranceConnect.
  * The error you will get will contain an error name (here error) and a
- * description of the error, for more details about it (error_descrition).
+ * description of the error, for more details about it (error_description).
  * We use Joi, the famous data validation library to simplify verification
  * of the return request.
  */
-const validateLogin = (req, res, next) => {
+export const callbackParamsValidatorMiddleware = (req, res, next) => {
   // 1 - get only the interesting params
   const { query, params, body } = req;
   const inputs = { query, params, body };
@@ -67,7 +62,7 @@ const validateLogin = (req, res, next) => {
     return res.status(status).render('pages/error.ejs', {
       status,
       error: 'Bad request',
-      errorDescription: "La requête n'est pas correctement formattée",
+      errorDescription: "La requête n'est pas correctement formatée",
     });
   }
 
@@ -95,12 +90,10 @@ const validateLogin = (req, res, next) => {
     return res.status(status).render('pages/error.ejs', {
       status,
       error: 'Bad request',
-      errorDescription: "La requête n'est pas correctement formattée",
+      errorDescription: "La requête n'est pas correctement formatée",
     });
   }
 
   // 8 - everything is good
   return next();
 };
-
-module.exports = validateLogin;
