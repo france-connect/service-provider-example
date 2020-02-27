@@ -18,11 +18,10 @@ export const QUERY_ERROR_REGEX = /^[\+&=#@;\,\w\\'áàâäãåçéèêëíìîï
 
 /**
  * @description regex that test the Code URL from FC
- * We accept UUID v1 code :
- * - 8 hexadecimal digits
- * - 4 hexadecimal digits
- * - 4 hexadecimal digits (first 0 to 5 and then 3 others)
- * - 4 hexadecimal digits (first 0 or 8 or 9 or a or b and then 3 others)
- * - 12 hexadecimal digits
+ * We accept
+ * - basics alphanumeric characters
+ * - dashs
+ * - underscores
+ * - minimum 1 characters and maximum 100 characters
  */
-export const QUERY_CODE_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+export const QUERY_CODE_REGEX = /^[a-z0-9_-]{10,100}$/i;
