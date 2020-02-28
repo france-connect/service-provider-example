@@ -46,7 +46,7 @@ export const invalidTokenConf = {
     redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`, // encodeURIComponent(`${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`),
     client_id: config.CLIENT_ID,
     client_secret: config.CLIENT_SECRET,
-    code: 'invalid-code',
+    code: 'invalid-code%',
   },
   responseBody: { status: 'fail', message: 'invalid_grant' },
 };
