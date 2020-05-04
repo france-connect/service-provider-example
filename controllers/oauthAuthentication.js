@@ -9,15 +9,23 @@ import { getPayloadOfIdToken } from '../helpers/utils';
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
 export const oauthLoginAuthorize = (req, res) => {
-  const eidasQueryString = req.body.eidasLevel ? `&acr_values=${req.body.eidasLevel}` : '';
-  const scopes = encodeURIComponent(`${config.MANDATORY_SCOPES} ${config.FC_SCOPES}`);
+  const { eidasLevel } = req.body;
 
-  return res.redirect(
-    `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}?`
-      + `response_type=code&client_id=${config.AUTHENTICATION_CLIENT_ID}&redirect_uri=${config.FS_URL}`
-      + `${config.LOGIN_CALLBACK_FS_PATH}&scope=${scopes}&state=home&nonce=customNonce11`
-      + `${eidasQueryString}`,
-  );
+  const query = {
+    scope: `${config.MANDATORY_SCOPES} ${config.FC_SCOPES}`,
+    redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
+    response_type: 'code',
+    client_id: config.AUTHENTICATION_CLIENT_ID,
+    state: 'home',
+    nonce: 'customNonce11',
+  };
+
+  if (eidasLevel) {
+    query.acr_values = eidasLevel;
+  }
+
+  const url = `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}`;
+  return res.redirect(`${url}?${querystring.stringify(query)}`);
 };
 
 export const oauthLoginCallback = async (req, res, next) => {
