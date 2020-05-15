@@ -10,9 +10,13 @@ import { getPayloadOfIdToken } from '../helpers/utils';
  */
 export const oauthLoginAuthorize = (req, res) => {
   const { eidasLevel } = req.body;
+  const scopes = Object.keys(req.body)
+    .filter(key => key.startsWith('scope_'))
+    .map(scope => scope.split('scope_').pop())
+    .join(' ');
 
   const query = {
-    scope: `${config.MANDATORY_SCOPES} ${config.FC_SCOPES}`,
+    scope: scopes,
     redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
     response_type: 'code',
     client_id: config.AUTHENTICATION_CLIENT_ID,
