@@ -3,7 +3,6 @@
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
 import express from 'express';
-import cors from 'cors';
 import logger from 'morgan';
 import session from 'express-session';
 import sessionstore from 'sessionstore';
@@ -33,9 +32,6 @@ app.use(session({
 
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
-} else {
-  // for test purpose
-  app.use(cors());
 }
 
 app.use(express.static('public'));
