@@ -53,10 +53,11 @@
               <div class="block">
                 <div class="select">
                   <div class="control">
-                    <select id="scope_menu"  value="profile">
+                    <select id="scope_menu" value="profile">
                       <option value="profile">Défaut : Profile</option>
                       <option value="identity">Identité Pivot</option>
                       <option value="birth">Naissance</option>
+                      <option value="basics">Basiques</option>
                       <option value="all">Tous</option>
                       <option value="anonymous">Anonyme</option>
                       <option value="none">Aucun</option>
@@ -65,10 +66,12 @@
                 </div>
               </div>
               <div class="columns is-variable is-multiline">
-                <% locals.scopes.forEach(scope => { %>
+                <% locals.scopesFamilies.all.forEach(scope => { %>
                   <div class="column is-half has-text-left">
                     <label class="checkbox box is-size-6 is-italic">
-                      <input name="scope_<%= scope %>" type="checkbox" aria-label="<%= scope %>" checked>
+                      <input name="scope_<%= scope %>" type="checkbox" aria-label="<%= scope %>" 
+                        <%= locals.scopesDefined.includes(scope) ? 'checked':''%>
+                      >
                       <%= scope %>
                     </label>
                   </div>
@@ -78,32 +81,7 @@
                 const PREFIX = 'scope_';
                 
                 const scopesInputs = document.querySelectorAll(`input[name^="${PREFIX}"]`);
-                const all = Array.from(scopesInputs).map(({name}) => name.split(PREFIX).pop());
-
-                const GROUP_SCOPES = {
-                  all,
-                  profile: [
-                    'openid',
-                    'given_name',
-                    'family_name',
-                    'preferred_username',
-                    'birthdate',
-                    'gender',
-                  ],
-                  identity: [
-                    'openid',
-                    'given_name',
-                    'family_name',
-                    'preferred_username',
-                    'birthdate',
-                    'gender',
-                    'birthplace',
-                    'birthcountry',
-                  ],
-                  birth: ['openid', 'birthplace', 'birthcountry'],
-                  anonymous: ['openid'],
-                  none: [],
-                };
+                const GROUP_SCOPES = JSON.parse('<%- JSON.stringify(locals.scopesFamilies || {}) %>');
                 
                 const scopesSelect = value => {
                   const scopes = GROUP_SCOPES[value];
