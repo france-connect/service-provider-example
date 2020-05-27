@@ -29,8 +29,8 @@ export const QUERY_CODE_REGEX = /^[a-z0-9_-]{10,100}$/i;
 /**
  * List of groups of scopes to help in login
  */
-export const GROUPS_FAMILY_SCOPES = {
-  all: [
+export const SCOPES_GROUPS = {
+  list: [
     'openid',
     'given_name',
     'family_name',
@@ -46,7 +46,7 @@ export const GROUPS_FAMILY_SCOPES = {
     'identite_pivot',
     'birth',
   ],
-  basics: [
+  all: [
     'openid',
     'email',
     'address',
