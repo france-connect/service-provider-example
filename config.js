@@ -15,7 +15,14 @@ const config = {
   DATA_CALLBACK_FS_PATH: '/data-callback',
   LOGOUT_CALLBACK_FS_PATH: '/logout-callback',
   MANDATORY_SCOPES: process.env.MANDATORY_SCOPES || 'openid',
-  FC_SCOPES: process.env.FC_SCOPES || 'given_name family_name birthdate gender birthplace birthcountry email preferred_username address phone',
+  FC_SCOPES: process.env.FC_SCOPES || [
+    'openid',
+    'given_name',
+    'family_name',
+    'preferred_username',
+    'birthdate',
+    'gender',
+  ].join(' '),
   DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft',
   DGFIP_DATA_FD_PATH: '/situations/ir/assiettes/annrev/2018',
   OPENID_ERRORS: [

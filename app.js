@@ -8,6 +8,7 @@ import session from 'express-session';
 import sessionstore from 'sessionstore';
 import bodyParser from 'body-parser';
 import config from './config';
+import { SCOPES_GROUPS } from './helpers/utils';
 import {
   oauthLoginCallback,
   oauthLogoutCallback,
@@ -52,7 +53,10 @@ app.locals.franceConnectKitUrl = `${config.FC_URL}${config.FRANCE_CONNECT_KIT_PA
 
 app.get('/', (req, res) => res.render('pages/home'));
 
-app.get('/login', (req, res) => res.status(200).render('pages/login', {}));
+app.get('/login', (req, res) => {
+  const scopesSelectedByDefault = `${config.MANDATORY_SCOPES} ${config.FC_SCOPES}`.split(' ');
+  return res.status(200).render('pages/login', { scopesSelectedByDefault, scopesFamilies: SCOPES_GROUPS });
+});
 
 app.post('/login-authorize', oauthLoginAuthorize);
 

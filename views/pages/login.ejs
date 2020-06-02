@@ -1,7 +1,23 @@
 <!doctype html>
 <html lang="en">
 <% include ../includes/head.ejs %>
-
+<style>
+  /* fix bulma wrong spacing on column item */
+  .column{
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+  }
+  /* fix bulma wrong margin on box item */
+  .box{
+    margin-bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  /* fix bulma display error on component size */
+  .checkbox{
+    width: 100%;
+  }
+</style>
 <body>
   <% include ../includes/header.ejs %>
   <% include ../includes/error.ejs %>
@@ -27,6 +43,63 @@
                 </select>
               </div>
             </div>
+
+            <div class="field">
+              <label class="label">
+                Scopes
+                <span class="has-text-info tooltip is-tooltip-multiline"
+                  data-tooltip="Vous pouvez régler les scopes voulues pour la procédure">
+                  (info)
+                </span>
+              </label>
+              <div class="block">
+                <div class="select">
+                  <div class="control">
+                    <select id="scope_menu" value="profile">
+                      <option value="profile">Défaut : Profile</option>
+                      <option value="identity">Identité Pivot</option>
+                      <option value="birth">Naissance</option>
+                      <option value="all">Tous</option>
+                      <option value="anonymous">Anonyme</option>
+                      <option value="none">Aucun</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="columns is-variable is-multiline">
+                <% locals.scopesFamilies.list.forEach(scope => { %>
+                  <div class="column is-half has-text-left">
+                    <label class="checkbox box is-size-6 is-italic">
+                      <input name="scope_<%= scope %>" type="checkbox" aria-label="<%= scope %>" 
+                        <%= locals.scopesSelectedByDefault.includes(scope) ? 'checked':''%>
+                      >
+                      <%= scope %>
+                    </label>
+                  </div>
+                <% }); %>
+              </div>
+              <script type="text/javascript">
+                const PREFIX = 'scope_';
+                
+                const scopesInputs = document.querySelectorAll(`input[name^="${PREFIX}"]`);
+                const GROUP_SCOPES = JSON.parse('<%- JSON.stringify(locals.scopesFamilies || {}) %>');
+                
+                const scopesSelect = value => {
+                  const scopes = GROUP_SCOPES[value];
+                  scopesInputs.forEach(input => {
+                    const scope = input.name.split(PREFIX).pop();
+                    input.checked = scopes.includes(scope);
+                  });
+                };
+
+                const select = document.querySelector('#scope_menu');
+                scopesSelect(select.value);
+                select.addEventListener('change', event => {
+                  scopesSelect(event.target.value);
+                });
+              </script>
+            </div>
+            
             <!-- FC btn -->
             <div data-role="login-authorize" class="field">
               <input type="image" src="img/FCboutons-10.png" alt="Soumettre" />

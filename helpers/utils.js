@@ -25,3 +25,59 @@ export const QUERY_ERROR_REGEX = /^[\+&=#@;\,\w\\'áàâäãåçéèêëíìîï
  * - minimum 1 characters and maximum 100 characters
  */
 export const QUERY_CODE_REGEX = /^[a-z0-9_-]{10,100}$/i;
+
+/**
+ * List of groups of scopes to help in login
+ */
+export const SCOPES_GROUPS = {
+  list: [
+    'openid',
+    'given_name',
+    'family_name',
+    'gender',
+    'preferred_username',
+    'birthdate',
+    'birthcountry',
+    'birthplace',
+    'email',
+    'address',
+    'phone',
+    'profile',
+    'identite_pivot',
+    'birth',
+  ],
+  all: [
+    'openid',
+    'email',
+    'address',
+    'phone',
+    'birthcountry',
+    'birthplace',
+    'birthdate',
+    'given_name',
+    'family_name',
+    'gender',
+    'preferred_username',
+  ],
+  profile: [
+    'openid',
+    'given_name',
+    'family_name',
+    'preferred_username',
+    'birthdate',
+    'gender',
+  ],
+  identity: [
+    'openid',
+    'given_name',
+    'family_name',
+    'preferred_username',
+    'birthdate',
+    'gender',
+    'birthplace',
+    'birthcountry',
+  ],
+  birth: ['openid', 'birthplace', 'birthcountry'],
+  anonymous: ['openid'],
+  none: [],
+};
