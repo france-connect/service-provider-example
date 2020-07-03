@@ -45,6 +45,11 @@ export const SCOPES_GROUPS = {
     'profile',
     'identite_pivot',
     'birth',
+    'dgfip_rfr',
+    'dgfip_nbpart',
+    'dgfip_sitfam',
+    'dgfip_pac',
+    'dgfip_aft',
   ],
   all: [
     'openid',
@@ -80,4 +85,12 @@ export const SCOPES_GROUPS = {
   birth: ['openid', 'birthplace', 'birthcountry'],
   anonymous: ['openid'],
   none: [],
+  data: [
+    'openid',
+    'dgfip_rfr',
+    'dgfip_nbpart',
+    'dgfip_sitfam',
+    'dgfip_pac',
+    'dgfip_aft',
+  ],
 };
