@@ -61,7 +61,7 @@ npm run lint
 
 This repository is shipped with public integration keys.
 It allow you to discover the application and start your tests without waiting for the validation of
-your request on https://signup.api.gouv.fr/franceconnect.
+your request on https://datapass.api.gouv.fr/franceconnect.
 
 This key is for limited use and has no support from our team:
 
