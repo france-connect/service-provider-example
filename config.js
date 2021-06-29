@@ -23,7 +23,7 @@ const config = {
     'birthdate',
     'gender',
   ].join(' '),
-  DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft',
+  DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft cnam_paiements_ij',
   DGFIP_DATA_FD_PATH: '/situations/ir/assiettes/annrev/2018',
   OPENID_ERRORS: [
     'invalid_request',

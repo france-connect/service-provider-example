@@ -50,6 +50,7 @@ export const SCOPES_GROUPS = {
     'dgfip_sitfam',
     'dgfip_pac',
     'dgfip_aft',
+    'cnam_paiements_ij',
   ],
   all: [
     'openid',
@@ -92,5 +93,6 @@ export const SCOPES_GROUPS = {
     'dgfip_sitfam',
     'dgfip_pac',
     'dgfip_aft',
+    'cnam_paiements_ij',
   ],
 };
