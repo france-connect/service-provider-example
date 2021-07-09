@@ -2,6 +2,8 @@ import querystring from 'querystring';
 import { httpClient } from '../helpers/httpClient';
 import config from '../config';
 import { getPayloadOfIdToken } from '../helpers/utils';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 /**
  * Format the url use in the redirection call
