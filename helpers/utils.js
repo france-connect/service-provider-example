@@ -36,6 +36,7 @@ export const SCOPES_GROUPS = {
     'family_name',
     'gender',
     'preferred_username',
+    'idp_birthdate',
     'birthdate',
     'birthcountry',
     'birthplace',
