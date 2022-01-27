@@ -11,7 +11,7 @@
       <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
       <pre>
             <p><strong><i>Corps des données :</i></strong></p>
-            <code class="json">
+            <code id="json-output" class="json">
 <%- locals.data %>
             </code>
         </pre>
@@ -21,7 +21,7 @@
       <% if (locals.eIDASLevel) { %>
       <pre>
             <p><strong><i>Accréditation eIDAS :</i></strong></p>
-            <code class="json">
+            <code id="info-acr" class="json">
 <%- locals.eIDASLevel %>
             </code>
         </pre>
