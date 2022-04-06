@@ -7,25 +7,41 @@
 
   <section class="section is-small">
     <div class="container">
-      <% if (locals.data) { %>
-      <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
-      <pre>
-            <p><strong><i>Corps des données :</i></strong></p>
-            <code id="json-output" class="json">
-<%- locals.data %>
-            </code>
-        </pre>
-      <% } else { %>
+      <% if (!locals.user && !locals.data) { %>
       <h1 class="title">Aucune donnée disponible</h1>
+      <% } else { %>
+      <h1 class="title">Voici les données que nous avons récupérées pour vous avec FranceConnect</h1>
+      <% } %>
+
+      <% if (locals.user) { %>
+      <pre>
+        <p><strong><i>Corps des données d'identité:</i></strong></p>
+        <code id="json-output" class="json">
+<%- JSON.stringify(locals.user, null, 2) %>
+        </code>
+      </pre>
+      <% } %>
+      <% if (locals.data) { %>
+      <pre>
+        <p><strong><i>Corps des données fournies par le fournisseur de données:</i></strong></p>
+        <code id="json-data" class="json">
+<%- JSON.stringify(locals.data, null, 2) %>
+        </code>
+      </pre>
       <% } %>
       <% if (locals.eIDASLevel) { %>
       <pre>
-            <p><strong><i>Accréditation eIDAS :</i></strong></p>
-            <code id="info-acr" class="json">
+        <p><strong><i>Accréditation eIDAS :</i></strong></p>
+        <code id="info-acr" class="json">
 <%- locals.eIDASLevel %>
-            </code>
-        </pre>
+        </code>
+      </pre>
       <% } %>
+      <p class="has-text-centered">
+        <a href="<%= locals.userLink %>">
+          Voir les usagers disponibles
+        </a>
+      </p>
       <p class="has-text-centered">
         <a href="<%= locals.dataLink %>">
           Voir les données disponibles

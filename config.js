@@ -14,7 +14,7 @@ const config = {
   LOGIN_CALLBACK_FS_PATH: '/login-callback',
   DATA_CALLBACK_FS_PATH: '/data-callback',
   LOGOUT_CALLBACK_FS_PATH: '/logout-callback',
-  MANDATORY_SCOPES: process.env.MANDATORY_SCOPES || 'openid',
+  MANDATORY_SCOPES: process.env.MANDATORY_SCOPES || 'openid given_name family_name',
   FC_SCOPES: process.env.FC_SCOPES || [
     'openid',
     'given_name',

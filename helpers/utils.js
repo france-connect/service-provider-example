@@ -97,3 +97,5 @@ export const SCOPES_GROUPS = {
     'cnam_paiements_ij',
   ],
 };
+
+export const containsDataScopes = (scope) => ['dgfip', 'cnam'].some(dataScopePrefix => scope && scope.includes(dataScopePrefix));
