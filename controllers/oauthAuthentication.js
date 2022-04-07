@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import querystring from 'querystring';
+import { URLSearchParams } from 'url';
 import config from '../config';
 import { containsDataScopes, getPayloadOfIdToken } from '../helpers/utils';
 import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
@@ -33,7 +33,8 @@ export const oauthLoginAuthorize = (req, res) => {
   }
 
   const url = `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}`;
-  return res.redirect(`${url}?${querystring.stringify(query)}`);
+  const params = new URLSearchParams(query).toString();
+  return res.redirect(`${url}?${params}`);
 };
 
 export const oauthLoginCallback = async (req, res, next) => {
@@ -79,10 +80,14 @@ export const oauthLogoutAuthorize = (req, res) => {
   const { session: { idToken } } = req;
   const state = crypto.randomBytes(32).toString('hex');
 
+  const paramsObj = {
+    id_token_hint: idToken,
+    state,
+    post_logout_redirect_uri: `${config.FS_URL}${config.LOGOUT_CALLBACK_FS_PATH}`,
+  };
+  const params = new URLSearchParams(paramsObj).toString();
   return res.redirect(
-    `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`
-    + `${idToken}&state=${state}&post_logout_redirect_uri=${config.FS_URL}`
-    + `${config.LOGOUT_CALLBACK_FS_PATH}`,
+    `${config.FC_URL}${config.LOGOUT_FC_PATH}?${params}`,
   );
 };
 

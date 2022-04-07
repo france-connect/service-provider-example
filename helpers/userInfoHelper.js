@@ -1,4 +1,4 @@
-import querystring from 'querystring';
+import { URLSearchParams } from 'url';
 import { httpClient } from './httpClient';
 import config from '../config';
 
@@ -21,10 +21,11 @@ export const requestToken = async (spConfig) => {
   };
 
   // Request access token.
+  const data = new URLSearchParams(body).toString();
   const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
     method: 'POST',
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    data: querystring.stringify(body),
+    data,
     url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
   });
 

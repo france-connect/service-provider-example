@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import querystring from 'querystring';
+import { URLSearchParams } from 'url';
 import config from '../config';
 import { getPayloadOfIdToken } from '../helpers/utils';
 import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
@@ -21,7 +21,8 @@ export const oauthDataAuthorize = (req, res) => {
   };
 
   const url = `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}`;
-  return res.redirect(`${url}?${querystring.stringify(query)}`);
+  const params = new URLSearchParams(query).toString();
+  return res.redirect(`${url}?${params}`);
 };
 
 export const oauthDataCallback = async (req, res, next) => {
@@ -63,4 +64,3 @@ export const getData = (req, res) => {
     dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
   });
 };
-
