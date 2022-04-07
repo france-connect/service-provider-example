@@ -98,4 +98,6 @@ export const SCOPES_GROUPS = {
   ],
 };
 
-export const containsDataScopes = (scope) => ['dgfip', 'cnam'].some(dataScopePrefix => scope && scope.includes(dataScopePrefix));
+export const containsDataScopes = (scope) => SCOPES_GROUPS.data
+  .filter((s) => s !== 'openid')
+  .some((dataScopePrefix) => scope && scope.includes(dataScopePrefix));

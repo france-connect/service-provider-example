@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import querystring from 'querystring';
 import config from '../config';
 import { containsDataScopes, getPayloadOfIdToken } from '../helpers/utils';
-import { requestDataInfo, requestUserInfo } from '../helpers/userInfoHelper';
+import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
 
 /**
  * Format the url use in the redirection call
@@ -22,11 +22,11 @@ export const oauthLoginAuthorize = (req, res) => {
     response_type: 'code',
     client_id: config.AUTHENTICATION_CLIENT_ID,
     state: crypto.randomBytes(32).toString('hex'),
-    nonce: crypto.randomBytes(32).toString('hex'),
+    nonce: crypto.randomBytes(24).toString('hex'),
   };
 
-  // Save requested scope in the session
-  req.session.scope = query.scope;
+  // Save requested scopes in the session
+  req.session.scopes = scopes;
 
   if (eidasLevel) {
     query.acr_values = eidasLevel;
@@ -41,23 +41,21 @@ export const oauthLoginCallback = async (req, res, next) => {
     const spConfig = {
       clientId: config.AUTHENTICATION_CLIENT_ID,
       clientSecret: config.AUTHENTICATION_CLIENT_SECRET,
+      code: req.query.code,
       redirectUri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
     };
 
-    const { statusCode, user, idToken = null } = await requestUserInfo(req, spConfig);
-    if (statusCode !== 200) {
-      return res.sendStatus(statusCode);
+    const { accessToken, idToken } = await requestToken(spConfig);
+    if (!accessToken || !idToken) {
+      res.sendStatus(401);
     }
+    const user = await requestUserInfo(accessToken);
 
     // Fetch the data from FD only if data scope requested
     let data = null;
-    const { scope } = req.session;
-    if (containsDataScopes(scope)) {
-      const { statusCode: dataStatusCode, data: dataInfo } = await requestDataInfo(req, spConfig);
-      if (dataStatusCode !== 200) {
-        return res.sendStatus(dataStatusCode);
-      }
-      data = dataInfo;
+    const { scopes } = req.session;
+    if (containsDataScopes(scopes)) {
+      data = await requestDataInfo(accessToken);
     }
 
     // Store the user and context in session so it is available for future requests

@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import querystring from 'querystring';
 import config from '../config';
 import { getPayloadOfIdToken } from '../helpers/utils';
-import { requestDataInfo, requestUserInfo } from '../helpers/userInfoHelper';
+import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
 
 /**
  * Format the url use in the redirection call
@@ -29,18 +29,16 @@ export const oauthDataCallback = async (req, res, next) => {
     const spConfig = {
       clientId: config.DATA_CLIENT_ID,
       clientSecret: config.DATA_CLIENT_SECRET,
+      code: req.query.code,
       redirectUri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
     };
 
-    const { statusCode, user, idToken = null } = await requestUserInfo(req, spConfig);
-    if (statusCode !== 200) {
-      return res.sendStatus(statusCode);
+    const { accessToken, idToken } = await requestToken(spConfig);
+    if (!accessToken || !idToken) {
+      res.sendStatus(401);
     }
-
-    const { statusCode: dataStatusCode, data } = await requestDataInfo(req, spConfig);
-    if (dataStatusCode !== 200) {
-      return res.sendStatus(dataStatusCode);
-    }
+    const user = await requestUserInfo(accessToken);
+    const data = await requestDataInfo(accessToken);
 
     // Store the user and context in session so it is available for future requests
     // as the idToken for Logout

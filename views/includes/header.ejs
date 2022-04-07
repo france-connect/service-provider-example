@@ -11,10 +11,16 @@
   </div>
   <div class="navbar-end">
     <div class="navbar-item">
-      <% if (locals.user) { %>
+      <% if (locals.user && locals.user.family_name && locals.user.given_name) { %>
       <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
         <a href="#" class="has-text-link">
           <%= locals.user.family_name %> <%= locals.user.given_name %>
+        </a>
+      </div>
+      <% } else if (locals.user) { %>
+      <div id="fconnect-profile" data-fc-logout-url="/logout" class="custom_navbar_position">
+        <a href="#" class="has-text-link">
+          Usager connecté
         </a>
       </div>
       <% } else { %>
