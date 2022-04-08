@@ -48,7 +48,7 @@ export const oauthLoginCallback = async (req, res, next) => {
 
     const { accessToken, idToken } = await requestToken(spConfig);
     if (!accessToken || !idToken) {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
     const user = await requestUserInfo(accessToken);
 
@@ -66,10 +66,21 @@ export const oauthLoginCallback = async (req, res, next) => {
     req.session.idTokenPayload = getPayloadOfIdToken(idToken);
     req.session.idToken = idToken;
 
-    return res.redirect('/data');
+    return res.redirect('/user');
   } catch (error) {
     return next(error);
   }
+};
+
+export const getUser = (req, res) => {
+  const { data, user, idTokenPayload = {} } = req.session;
+  return res.render('pages/data', {
+    user,
+    data,
+    eIDASLevel: idTokenPayload.acr,
+    userLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+    dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
+  });
 };
 
 /**
