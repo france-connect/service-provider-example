@@ -1,7 +1,8 @@
-import querystring from 'querystring';
-import { httpClient } from '../helpers/httpClient';
+import crypto from 'crypto';
+import { URLSearchParams } from 'url';
 import config from '../config';
-import { getPayloadOfIdToken } from '../helpers/utils';
+import { containsDataScopes, getPayloadOfIdToken } from '../helpers/utils';
+import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
 
 /**
  * Format the url use in the redirection call
@@ -20,51 +21,48 @@ export const oauthLoginAuthorize = (req, res) => {
     redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
     response_type: 'code',
     client_id: config.AUTHENTICATION_CLIENT_ID,
-    state: 'home',
-    nonce: 'customNonce11',
+    state: `state${crypto.randomBytes(32).toString('hex')}`,
+    nonce: `nonce${crypto.randomBytes(32).toString('hex')}`,
   };
+
+  // Save requested scopes in the session
+  req.session.scopes = scopes;
 
   if (eidasLevel) {
     query.acr_values = eidasLevel;
   }
 
   const url = `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}`;
-  return res.redirect(`${url}?${querystring.stringify(query)}`);
+  const params = new URLSearchParams(query).toString();
+  return res.redirect(`${url}?${params}`);
 };
 
 export const oauthLoginCallback = async (req, res, next) => {
   try {
-    // Set request params
-    const body = {
-      grant_type: 'authorization_code',
-      redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
-      client_id: config.AUTHENTICATION_CLIENT_ID,
-      client_secret: config.AUTHENTICATION_CLIENT_SECRET,
+    const spConfig = {
+      clientId: config.AUTHENTICATION_CLIENT_ID,
+      clientSecret: config.AUTHENTICATION_CLIENT_SECRET,
       code: req.query.code,
+      redirectUri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
     };
 
-    // Request access token.
-    const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: querystring.stringify(body),
-      url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
-    });
-
+    const { accessToken, idToken } = await requestToken(spConfig);
     if (!accessToken || !idToken) {
       return res.sendStatus(401);
     }
+    const user = await requestUserInfo(accessToken);
 
-    // Request user data
-    const { data: user } = await httpClient({
-      method: 'GET',
-      headers: { Authorization: `Bearer ${accessToken}` },
-      url: `${config.FC_URL}${config.USERINFO_FC_PATH}`,
-    });
+    // Fetch the data from FD only if data scope requested
+    let data = null;
+    const { scopes } = req.session;
+    if (containsDataScopes(scopes)) {
+      data = await requestDataInfo(accessToken);
+    }
 
     // Store the user and context in session so it is available for future requests
     // as the idToken for Logout
     req.session.user = user;
+    req.session.data = data;
     req.session.idTokenPayload = getPayloadOfIdToken(idToken);
     req.session.idToken = idToken;
 
@@ -74,12 +72,16 @@ export const oauthLoginCallback = async (req, res, next) => {
   }
 };
 
-export const getUser = (req, res) => res.render('pages/data', {
-  user: req.session.user,
-  data: JSON.stringify(req.session.user, null, 2),
-  eIDASLevel: JSON.stringify(req.session.idTokenPayload.acr, null, 2),
-  dataLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
-});
+export const getUser = (req, res) => {
+  const { data, user, idTokenPayload = {} } = req.session;
+  return res.render('pages/data', {
+    user,
+    data,
+    eIDASLevel: idTokenPayload.acr,
+    userLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
+    dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
+  });
+};
 
 /**
  * Format the url 's that is used in a redirect call to France Connect logout API endpoint
@@ -87,11 +89,16 @@ export const getUser = (req, res) => res.render('pages/data', {
  */
 export const oauthLogoutAuthorize = (req, res) => {
   const { session: { idToken } } = req;
+  const state = `state${crypto.randomBytes(32).toString('hex')}`;
 
+  const paramsObj = {
+    id_token_hint: idToken,
+    state,
+    post_logout_redirect_uri: `${config.FS_URL}${config.LOGOUT_CALLBACK_FS_PATH}`,
+  };
+  const params = new URLSearchParams(paramsObj).toString();
   return res.redirect(
-    `${config.FC_URL}${config.LOGOUT_FC_PATH}?id_token_hint=`
-      + `${idToken}&state=customState11&post_logout_redirect_uri=${config.FS_URL}`
-      + `${config.LOGOUT_CALLBACK_FS_PATH}`,
+    `${config.FC_URL}${config.LOGOUT_FC_PATH}?${params}`,
   );
 };
 

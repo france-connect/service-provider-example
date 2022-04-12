@@ -10,13 +10,16 @@ import bodyParser from 'body-parser';
 import config from './config';
 import { SCOPES_GROUPS } from './helpers/utils';
 import {
-  oauthLoginCallback,
-  oauthLogoutCallback,
   getUser,
   oauthLoginAuthorize,
+  oauthLoginCallback,
   oauthLogoutAuthorize,
+  oauthLogoutCallback,
 } from './controllers/oauthAuthentication';
-import { oauthDataCallback, getData, oauthDataAuthorize } from './controllers/oauthData';
+import {
+  oauthDataAuthorize,
+  oauthDataCallback,
+} from './controllers/oauthData';
 import { callbackParamsValidatorMiddleware } from './validators/callbackParams';
 
 const app = express();
@@ -71,8 +74,6 @@ app.get('/data-authorize', oauthDataAuthorize);
 app.get('/data-callback', callbackParamsValidatorMiddleware, oauthDataCallback);
 
 app.get('/user', getUser);
-
-app.get('/data', getData);
 
 // Setting app port
 const port = process.env.PORT || '3000';

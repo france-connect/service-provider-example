@@ -1,6 +1,8 @@
-import querystring from 'querystring';
-import { httpClient } from '../helpers/httpClient';
+import crypto from 'crypto';
+import { URLSearchParams } from 'url';
 import config from '../config';
+import { getPayloadOfIdToken } from '../helpers/utils';
+import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
 
 /**
  * Format the url use in the redirection call
@@ -13,63 +15,41 @@ export const oauthDataAuthorize = (req, res) => {
     redirect_uri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
     response_type: 'code',
     client_id: config.DATA_CLIENT_ID,
-    state: 'home',
-    nonce: 'customNonce11',
+    state: `state${crypto.randomBytes(32).toString('hex')}`,
+    nonce: `nonce${crypto.randomBytes(32).toString('hex')}`,
     acr_values: 'eidas1',
   };
 
   const url = `${config.FC_URL}${config.AUTHORIZATION_FC_PATH}`;
-  return res.redirect(`${url}?${querystring.stringify(query)}`);
+  const params = new URLSearchParams(query).toString();
+  return res.redirect(`${url}?${params}`);
 };
 
 export const oauthDataCallback = async (req, res, next) => {
   try {
-    // Set request params
-    const body = {
-      grant_type: 'authorization_code',
-      redirect_uri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
-      client_id: config.DATA_CLIENT_ID,
-      client_secret: config.DATA_CLIENT_SECRET,
+    const spConfig = {
+      clientId: config.DATA_CLIENT_ID,
+      clientSecret: config.DATA_CLIENT_SECRET,
       code: req.query.code,
+      redirectUri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
     };
 
-    // Request access token.
-    const { data: { access_token: accessToken, id_token: idToken } } = await httpClient({
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: querystring.stringify(body),
-      url: `${config.FC_URL}${config.TOKEN_FC_PATH}`,
-    });
-
+    const { accessToken, idToken } = await requestToken(spConfig);
     if (!accessToken || !idToken) {
       return res.sendStatus(401);
     }
+    const user = await requestUserInfo(accessToken);
+    const data = await requestDataInfo(accessToken);
 
-    // Request data from data provider
-    const { data } = await httpClient({
-      method: 'GET',
-      // Only valid if it's used with https://github.com/france-connect/data-provider-example/
-      // If you want to use your own code change the url's value in the config/config.json file.
-      url: `${config.FD_URL}${config.DGFIP_DATA_FD_PATH}`,
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    // store data in session to be able to display them on data page
+    // Store the user and context in session so it is available for future requests
+    // as the idToken for Logout
+    req.session.user = user;
     req.session.data = data;
+    req.session.idTokenPayload = getPayloadOfIdToken(idToken);
+    req.session.idToken = idToken;
 
-    return res.redirect('/data');
+    return res.redirect('/user');
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      req.session.data = null;
-
-      return res.redirect('/data');
-    }
-
     return next(error);
   }
 };
-
-export const getData = (req, res) => res.render('pages/data', {
-  data: req.session.data ? JSON.stringify(req.session.data, null, 2) : null,
-  dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
-});
