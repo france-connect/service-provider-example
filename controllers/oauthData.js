@@ -15,8 +15,8 @@ export const oauthDataAuthorize = (req, res) => {
     redirect_uri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
     response_type: 'code',
     client_id: config.DATA_CLIENT_ID,
-    state: crypto.randomBytes(32).toString('hex'),
-    nonce: crypto.randomBytes(32).toString('hex'),
+    state: `state${crypto.randomBytes(32).toString('hex')}`,
+    nonce: `nonce${crypto.randomBytes(32).toString('hex')}`,
     acr_values: 'eidas1',
   };
 

@@ -21,8 +21,8 @@ export const oauthLoginAuthorize = (req, res) => {
     redirect_uri: `${config.FS_URL}${config.LOGIN_CALLBACK_FS_PATH}`,
     response_type: 'code',
     client_id: config.AUTHENTICATION_CLIENT_ID,
-    state: crypto.randomBytes(32).toString('hex'),
-    nonce: crypto.randomBytes(24).toString('hex'),
+    state: `state${crypto.randomBytes(32).toString('hex')}`,
+    nonce: `nonce${crypto.randomBytes(32).toString('hex')}`,
   };
 
   // Save requested scopes in the session
@@ -89,7 +89,7 @@ export const getUser = (req, res) => {
  */
 export const oauthLogoutAuthorize = (req, res) => {
   const { session: { idToken } } = req;
-  const state = crypto.randomBytes(32).toString('hex');
+  const state = `state${crypto.randomBytes(32).toString('hex')}`;
 
   const paramsObj = {
     id_token_hint: idToken,
