@@ -13,6 +13,7 @@ const config = {
   LOGOUT_FC_PATH: process.env.LOGOUT_FC_PATH || '/api/v1/logout',
   LOGIN_CALLBACK_FS_PATH: '/login-callback',
   DATA_CALLBACK_FS_PATH: '/data-callback',
+  TRACKS_CALLBACK_FS_PATH: '/tracks-callback',
   LOGOUT_CALLBACK_FS_PATH: '/logout-callback',
   MANDATORY_SCOPES: process.env.MANDATORY_SCOPES || 'openid',
   FC_SCOPES: process.env.FC_SCOPES || [
@@ -34,6 +35,7 @@ const config = {
     'server_error',
     'temporarily_unavailable',
   ],
+  TRACKS_SCOPES: 'connexion_tracks',
 };
 
 export default config;

@@ -20,6 +20,10 @@ import {
   oauthDataAuthorize,
   oauthDataCallback,
 } from './controllers/oauthData';
+import {
+  oauthTracksAuthorize,
+  oauthTracksCallback,
+} from './controllers/oauthTracks';
 import { callbackParamsValidatorMiddleware } from './validators/callbackParams';
 
 const app = express();
@@ -72,6 +76,10 @@ app.get('/logout-callback', oauthLogoutCallback);
 app.get('/data-authorize', oauthDataAuthorize);
 
 app.get('/data-callback', callbackParamsValidatorMiddleware, oauthDataCallback);
+
+app.get('/tracks-authorize', oauthTracksAuthorize);
+
+app.get('/tracks-callback', callbackParamsValidatorMiddleware, oauthTracksCallback);
 
 app.get('/user', getUser);
 
