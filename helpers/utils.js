@@ -52,6 +52,7 @@ export const SCOPES_GROUPS = {
     'dgfip_pac',
     'dgfip_aft',
     'cnam_paiements_ij',
+    'connexion_tracks',
   ],
   all: [
     'openid',
@@ -95,6 +96,10 @@ export const SCOPES_GROUPS = {
     'dgfip_pac',
     'dgfip_aft',
     'cnam_paiements_ij',
+  ],
+  tracks: [
+    'openid',
+    'connexion_tracks',
   ],
 };
 
