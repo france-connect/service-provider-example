@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { URLSearchParams } from 'url';
 import config from '../config';
 import { getPayloadOfIdToken } from '../helpers/utils';
-import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
+import { requestTracksDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
 
 /**
  * Format the url use in the redirection call
@@ -12,7 +12,7 @@ import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userI
 export const oauthTracksAuthorize = (req, res) => {
   const query = {
     scope: `${config.MANDATORY_SCOPES} ${config.TRACKS_SCOPES}`,
-    redirect_uri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
+    redirect_uri: `${config.FS_URL}${config.TRACKS_CALLBACK_FS_PATH}`,
     response_type: 'code',
     client_id: config.DATA_CLIENT_ID,
     state: `state${crypto.randomBytes(32).toString('hex')}`,
@@ -31,7 +31,7 @@ export const oauthTracksCallback = async (req, res, next) => {
       clientId: config.DATA_CLIENT_ID,
       clientSecret: config.DATA_CLIENT_SECRET,
       code: req.query.code,
-      redirectUri: `${config.FS_URL}${config.DATA_CALLBACK_FS_PATH}`,
+      redirectUri: `${config.FS_URL}${config.TRACKS_CALLBACK_FS_PATH}`,
     };
 
     const { accessToken, idToken } = await requestToken(spConfig);
@@ -39,12 +39,12 @@ export const oauthTracksCallback = async (req, res, next) => {
       return res.sendStatus(401);
     }
     const user = await requestUserInfo(accessToken);
-    const data = await requestDataInfo(accessToken);
+    const tracks = await requestTracksDataInfo(accessToken);
 
     // Store the user and context in session so it is available for future requests
     // as the idToken for Logout
     req.session.user = user;
-    req.session.data = data;
+    req.session.tracks = tracks;
     req.session.idTokenPayload = getPayloadOfIdToken(idToken);
     req.session.idToken = idToken;
 

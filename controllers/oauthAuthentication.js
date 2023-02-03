@@ -1,8 +1,10 @@
 import crypto from 'crypto';
 import { URLSearchParams } from 'url';
 import config from '../config';
-import { containsDataScopes, getPayloadOfIdToken } from '../helpers/utils';
-import { requestDataInfo, requestToken, requestUserInfo } from '../helpers/userInfoHelper';
+import { containsDataScopes, containsTracksScopes, getPayloadOfIdToken } from '../helpers/utils';
+import {
+  requestDataInfo, requestToken, requestTracksDataInfo, requestUserInfo,
+} from '../helpers/userInfoHelper';
 
 /**
  * Format the url use in the redirection call
@@ -59,10 +61,15 @@ export const oauthLoginCallback = async (req, res, next) => {
       data = await requestDataInfo(accessToken);
     }
 
+    let tracks = null;
+    if (containsTracksScopes(scopes)) {
+      tracks = await requestTracksDataInfo(accessToken);
+    }
     // Store the user and context in session so it is available for future requests
     // as the idToken for Logout
     req.session.user = user;
     req.session.data = data;
+    req.session.tracks = tracks;
     req.session.idTokenPayload = getPayloadOfIdToken(idToken);
     req.session.idToken = idToken;
 
@@ -73,10 +80,13 @@ export const oauthLoginCallback = async (req, res, next) => {
 };
 
 export const getUser = (req, res) => {
-  const { data, user, idTokenPayload = {} } = req.session;
+  const {
+    data, user, idTokenPayload = {}, tracks,
+  } = req.session;
   return res.render('pages/data', {
     user,
     data,
+    tracks,
     eIDASLevel: idTokenPayload.acr,
     userLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
     dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',

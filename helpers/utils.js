@@ -105,4 +105,8 @@ export const SCOPES_GROUPS = {
 
 export const containsDataScopes = (scope) => SCOPES_GROUPS.data
   .filter((s) => s !== 'openid')
-  .some((dataScopePrefix) => scope && scope.includes(dataScopePrefix));
+  .some((dataScope) => scope && scope.includes(dataScope));
+
+export const containsTracksScopes = (scope) => SCOPES_GROUPS.tracks
+  .filter((s) => s !== 'openid')
+  .some((tracksScope) => scope && scope.includes(tracksScope));
