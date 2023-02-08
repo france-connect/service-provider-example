@@ -57,8 +57,6 @@ export const requestDataInfo = async (accessToken) => {
 export const requestTracksDataInfo = async (accessToken) => {
   const { data } = await httpClient({
     method: 'GET',
-    // Only valid if it's used with https://github.com/france-connect/data-provider-example/
-    // If you want to use your own code change the url's value in the config/config.json file.
     url: `${config.FD_TRACKS_URL}${config.TRACKS_DATA_PATH}`,
     headers: { Authorization: `Bearer ${accessToken}` },
   });
