@@ -53,3 +53,13 @@ export const requestDataInfo = async (accessToken) => {
 
   return data;
 };
+
+export const requestTracksDataInfo = async (accessToken) => {
+  const { data } = await httpClient({
+    method: 'GET',
+    url: `${config.FD_TRACKS_URL}${config.TRACKS_DATA_PATH}`,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+
+  return data;
+};

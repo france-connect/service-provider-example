@@ -2,6 +2,7 @@ const config = {
   FC_URL: process.env.FC_URL || 'https://fcp.integ01.dev-franceconnect.fr',
   FD_URL: process.env.FD_URL || 'https://fournisseur-de-donnees.dev-franceconnect.fr',
   FS_URL: process.env.FS_URL || 'http://localhost:3000',
+  FD_TRACKS_URL: process.env.FD_TRACKS_URL || 'https://tracks-data-provider.docker.dev-franceconnect.fr',
   AUTHENTICATION_CLIENT_ID: process.env.CLIENT_ID || '211286433e39cce01db448d80181bdfd005554b19cd51b3fe7943f6b3b86ab6e',
   AUTHENTICATION_CLIENT_SECRET: process.env.CLIENT_SECRET || '2791a731e6a59f56b6b4dd0d08c9b1f593b5f3658b9fd731cb24248e2669af4b',
   DATA_CLIENT_ID: process.env.DATA_CLIENT_ID || '211286433e39cce01db448d80181bdfd005554b19cd51b3fe7943f6b3b86ab6e',
@@ -13,6 +14,7 @@ const config = {
   LOGOUT_FC_PATH: process.env.LOGOUT_FC_PATH || '/api/v1/logout',
   LOGIN_CALLBACK_FS_PATH: '/login-callback',
   DATA_CALLBACK_FS_PATH: '/data-callback',
+  TRACKS_CALLBACK_FS_PATH: '/tracks-callback',
   LOGOUT_CALLBACK_FS_PATH: '/logout-callback',
   MANDATORY_SCOPES: process.env.MANDATORY_SCOPES || 'openid',
   FC_SCOPES: process.env.FC_SCOPES || [
@@ -25,6 +27,7 @@ const config = {
   ].join(' '),
   DGFIP_SCOPES: 'dgfip_rfr dgfip_nbpart dgfip_sitfam dgfip_pac dgfip_aft cnam_paiements_ij',
   DGFIP_DATA_FD_PATH: '/situations/ir/assiettes/annrev/2018',
+  TRACKS_DATA_PATH: '/data/v1/connexion_tracks',
   OPENID_ERRORS: [
     'invalid_request',
     'unauthorized_client',
@@ -34,6 +37,7 @@ const config = {
     'server_error',
     'temporarily_unavailable',
   ],
+  TRACKS_SCOPES: 'connexion_tracks',
 };
 
 export default config;

@@ -52,6 +52,7 @@ export const SCOPES_GROUPS = {
     'dgfip_pac',
     'dgfip_aft',
     'cnam_paiements_ij',
+    'connexion_tracks',
   ],
   all: [
     'openid',
@@ -96,8 +97,16 @@ export const SCOPES_GROUPS = {
     'dgfip_aft',
     'cnam_paiements_ij',
   ],
+  tracks: [
+    'openid',
+    'connexion_tracks',
+  ],
 };
 
 export const containsDataScopes = (scope) => SCOPES_GROUPS.data
   .filter((s) => s !== 'openid')
-  .some((dataScopePrefix) => scope && scope.includes(dataScopePrefix));
+  .some((dataScope) => scope && scope.includes(dataScope));
+
+export const containsTracksScopes = (scope) => SCOPES_GROUPS.tracks
+  .filter((s) => s !== 'openid')
+  .some((tracksScope) => scope && scope.includes(tracksScope));

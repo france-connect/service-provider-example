@@ -29,6 +29,14 @@
         </code>
       </pre>
       <% } %>
+      <% if (locals.tracks) { %>
+        <pre>
+          <p><strong><i>Corps des données fournies par le fournisseur de données de traces:</i></strong></p>
+          <code id="json-tracks" class="json">
+  <%- JSON.stringify(locals.tracks, null, 2) %>
+          </code>
+        </pre>
+        <% } %>
       <% if (locals.eIDASLevel) { %>
       <pre>
         <p><strong><i>Accréditation eIDAS :</i></strong></p>
