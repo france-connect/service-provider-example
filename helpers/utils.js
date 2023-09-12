@@ -53,6 +53,7 @@ export const SCOPES_GROUPS = {
     'dgfip_aft',
     'cnam_paiements_ij',
     'connexion_tracks',
+    'amr',
   ],
   all: [
     'openid',
