@@ -14,7 +14,8 @@ export const getPayloadOfIdToken = (idToken) => {
  * - miminum 1 character and maximum 500
  */
 // eslint-disable-next-line no-useless-escape
-export const QUERY_ERROR_REGEX = /^[\+&=#@;\,\w\\'áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ. \t-]{1,500}$/;
+export const QUERY_ERROR_REGEX =
+  /^[\+&=#@;\,\w\\'áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ. \t-]{1,500}$/;
 
 /**
  * @description regex that test the Code URL from FC
@@ -98,16 +99,15 @@ export const SCOPES_GROUPS = {
     'dgfip_aft',
     'cnam_paiements_ij',
   ],
-  tracks: [
-    'openid',
-    'connexion_tracks',
-  ],
+  tracks: ['openid', 'connexion_tracks'],
 };
 
-export const containsDataScopes = (scope) => SCOPES_GROUPS.data
-  .filter((s) => s !== 'openid')
-  .some((dataScope) => scope && scope.includes(dataScope));
+export const containsDataScopes = (scope) =>
+  SCOPES_GROUPS.data
+    .filter((s) => s !== 'openid')
+    .some((dataScope) => scope && scope.includes(dataScope));
 
-export const containsTracksScopes = (scope) => SCOPES_GROUPS.tracks
-  .filter((s) => s !== 'openid')
-  .some((tracksScope) => scope && scope.includes(tracksScope));
+export const containsTracksScopes = (scope) =>
+  SCOPES_GROUPS.tracks
+    .filter((s) => s !== 'openid')
+    .some((tracksScope) => scope && scope.includes(tracksScope));
