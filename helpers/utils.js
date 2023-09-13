@@ -53,6 +53,7 @@ export const SCOPES_GROUPS = {
     'dgfip_aft',
     'cnam_paiements_ij',
     'connexion_tracks',
+    'amr',
   ],
   all: [
     'openid',
@@ -97,10 +98,7 @@ export const SCOPES_GROUPS = {
     'dgfip_aft',
     'cnam_paiements_ij',
   ],
-  tracks: [
-    'openid',
-    'connexion_tracks',
-  ],
+  tracks: ['openid', 'connexion_tracks'],
 };
 
 export const containsDataScopes = (scope) => SCOPES_GROUPS.data
