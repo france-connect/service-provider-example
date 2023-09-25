@@ -92,6 +92,7 @@ export const getUser = (req, res) => {
     data,
     tracks,
     eIDASLevel: idTokenPayload.acr,
+    amr: idTokenPayload.amr,
     userLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
     dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
   });

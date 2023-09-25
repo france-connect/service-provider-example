@@ -45,6 +45,14 @@
         </code>
       </pre>
       <% } %>
+      <% if (locals.amr) { %>
+      <pre>
+        <p><strong><i>Valeurs amr :</i></strong></p>
+        <code id="info-amr" class="json">
+<%- locals.amr.join(', ') %>
+        </code>
+      </pre>
+      <% } %>
       <p class="has-text-centered">
         <a href="<%= locals.userLink %>">
           Voir les usagers disponibles
