@@ -12,7 +12,7 @@ import {
  * @see @link{ https://partenaires.franceconnect.gouv.fr/fcp/fournisseur-service# }
  */
 export const oauthLoginAuthorize = (req, res) => {
-  const { eidasLevel } = req.body;
+  const { claims, eidasLevel } = req.body;
   const scopes = Object.keys(req.body)
     .filter(key => key.startsWith('scope_'))
     .map(scope => scope.split('scope_').pop())
@@ -26,6 +26,10 @@ export const oauthLoginAuthorize = (req, res) => {
     state: `state${crypto.randomBytes(32).toString('hex')}`,
     nonce: `nonce${crypto.randomBytes(32).toString('hex')}`,
   };
+
+  if (claims) {
+    query.claims = claims;
+  }
 
   // Save requested scopes in the session
   req.session.scopes = scopes;
@@ -88,6 +92,7 @@ export const getUser = (req, res) => {
     data,
     tracks,
     eIDASLevel: idTokenPayload.acr,
+    amr: idTokenPayload.amr,
     userLink: 'https://github.com/france-connect/identity-provider-example/blob/master/database.csv',
     dataLink: 'https://github.com/france-connect/data-provider-example/blob/master/database.csv',
   });
