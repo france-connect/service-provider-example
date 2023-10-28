@@ -30,7 +30,7 @@
     "chai-http": "^4.0.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mocha": "^5.2.0",
     "nock": "^9.4.4",
     "sinon": "^6.1.4",
